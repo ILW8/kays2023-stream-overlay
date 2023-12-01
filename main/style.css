@@ -272,7 +272,7 @@ html {
     font-size: 25px;
     margin-top: 6px;
     margin-left: 114px;
-    width: calc(600px - 122px);
+    width: calc(512px - 122px);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
