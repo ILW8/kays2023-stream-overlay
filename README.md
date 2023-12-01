@@ -26,6 +26,12 @@ scene collection provided [here](obs-kays2023.json), make sure to check everythi
 | vc_overlay       |                                                         | 480   | 100    | 16 | 1014 |
 | mappool_overlay* | http://localhost:24050/kays2023-stream-overlay/mappool/ | 2220  | 700    | 0  | 220  |
 
+### Interacting with the mappool
+- Left click: left (red) team pick
+- Right click: right (blue) team pick
+- Ctrl+Click: ban
+- Shift+Click: clear
+
 <sup>*"control panel" featuring autopick function is off the screen, use the interact menu to activate</sup>
 
 ### INTRO SCENE
@@ -43,12 +49,6 @@ scene collection provided [here](obs-kays2023.json), make sure to check everythi
 Intro and winner scenes can also have the vc overlay on either bottom corner, doesn't matter
 
 Add a `300ms` `linear horizontal` **luma wipe** transition between the scenes with `0.05` smoothness
-
-### Interacting with the mappool
-- Left click: left (red) team pick
-- Right click: right (blue) team pick
-- Ctrl+Click: ban
-- Shift+Click: clear
 
 ## Other
 
