@@ -102,7 +102,6 @@ class Beatmap {
 		this.bottom.setAttribute('class', 'mapBottom');
 		this.bottom.appendChild(this.diff);
 		this.bottom.appendChild(this.modIcon);
-		// this.bottom.style.color = `var(--accent-mod-${this.mods.toLowerCase()})`;
 		this.bottom.style.color = `var(--accent-dark`;
 
 		this.clicker.setAttribute('class', 'clicker');
@@ -111,7 +110,7 @@ class Beatmap {
 		this.mapContainer.appendChild(this.bottom);
 		clickerObj.appendChild(this.mapContainer);
 		// clickerObj.appendChild(this.pickedStatus);
-		// clickerObj.appendChild(this.blinkOverlay);
+		clickerObj.appendChild(this.blinkOverlay);
 	}
 }
 
@@ -169,6 +168,7 @@ const banMap = (bm, playerName, color) => {
 const resetMap = bm => {
 	selectedMaps = selectedMaps.filter(e => e != bm.beatmapID);
 	bm.top.style.backgroundColor = `var(--accent)`;
+	bm.bottom.style.color = `var(--accent-dark)`;
 	bm.image.style.borderColor = `var(--accent-dark)`;
 	bm.mapContainer.style.boxShadow = `0px 6px 0px var(--accent-dark)`;
 	bm.blinkOverlay.style.animation = 'none';
