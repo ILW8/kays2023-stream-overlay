@@ -52,36 +52,6 @@ socket.onclose = event => {
 
 socket.onerror = error => { console.log('Socket Error: ', error); };
 
-// window.setInterval(async () => {
-// 	await delay(200);
-// 	let cookieName = 'lastPick';
-// 	const match = document.cookie.match(`(?:^|.*)${cookieName}=(.+?)(?:$|[|;].*)`);
-
-// 	let checkValid = () => {
-// 		if (!mapid) return -9;
-// 		if (match) {
-// 			let cookieValue = match[1].split('+');
-// 			if (cookieValue.length !== 2) return -1;  // expected format: <beatmap_id>-<picking_team>
-// 			const parsedBeatmapID = parseInt(cookieValue[0]);
-// 			if (isNaN(parsedBeatmapID)) return -2;
-
-// 			// if (true) {  // bypass beatmap id checking during development
-// 			if (mapid == parsedBeatmapID) {
-// 				let map_obj = stage_data.beatmaps.find(m => m.beatmap_id == mapid);
-// 				if (map_obj?.identifier?.toUpperCase().includes('TB')) return -3;
-// 				picked_by_label.innerHTML = `${cookieValue[1]} pick`;
-// 				picked_by_label.style.opacity = 1;
-// 				return 0;
-// 			}
-// 			return -255;
-// 		}
-// 	}
-
-// 	if (checkValid() !== 0) {
-// 		picked_by_label.style.opacity = 0;
-// 	}
-// }, 500);
-
 let image, title_, artist_, diff_, modid_, replay_, mapid, md5;
 let last_score_update = 0, last_strain_update = 0;
 
@@ -96,15 +66,15 @@ let scoreVisible, starsVisible;
 let starsRed, scoreRed, nameRed;
 let starsBlue, scoreBlue, nameBlue;
 
-scoreRed = 1321604;
-scoreBlue = 1113605;
+scoreRed = 0;
+scoreBlue = 0;
 
 socket.onmessage = async event => {
 	let data = JSON.parse(event.data);
 
 	if (scoreVisible !== data.tourney.manager.bools.scoreVisible) {
 		scoreVisible = data.tourney.manager.bools.scoreVisible;
-		if (!scoreVisible) {
+		if (scoreVisible) {
 			chat_container.style.opacity = 0;
 			score_row.style.opacity = 1;
 		} else {
@@ -284,11 +254,16 @@ socket.onmessage = async event => {
 	}
 
 	if (scoreVisible) {
-		// scoreRed = data.tourney.ipcClients[0].gameplay.score;
-		// scoreBlue = data.tourney.ipcClients[1].gameplay.score;
+		let scores = [];
+		let playerCount = data.tourney.ipcClients.length;
+		for (let i = 0; i < playerCount; i++) {
+			let score = data.tourney.ipcClients[i];
+			if (data.tourney.ipcClients[i]?.gameplay?.mods?.str?.toUpperCase().includes('EZ')) score *= 2;
+			scores.push({id: i, score});
+		}
 
-		scoreRed += Math.floor(1000 * Math.random());
-		scoreBlue += Math.floor(1000 * Math.random());
+		scoreRed = scores.filter(s => s.id < playerCount / 2).map(s => s.score).reduce((a, b) => a + b);
+		scoreBlue = scores.filter(s => s.id >= playerCount / 2).map(s => s.score).reduce((a, b) => a + b);
 
 		let scoreDiff = Math.abs(scoreRed - scoreBlue);
 		let maxScore = Math.max(scoreRed, scoreBlue, 3000000)
