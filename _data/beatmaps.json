@@ -1,0 +1,206 @@
+{
+    "stage": "Week 1",
+    "abbreviation": "W1",
+    "beatmaps": [
+        {
+            "beatmap_id": 345189,
+            "identifier": "NM1",
+            "mods": "NM",
+            "sr": 6.96,
+            "title": "Worldwide Choppers",
+            "artist": "Tech N9ne",
+            "difficulty": "Gangsta",
+            "beatmapset_id": 137377
+        },
+        {
+            "beatmap_id": 1740944,
+            "identifier": "NM2",
+            "mods": "NM",
+            "sr": 7.15,
+            "title": "Sakura Trip",
+            "artist": "Aika",
+            "difficulty": "Electric Pink",
+            "beatmapset_id": 830964
+        },
+        {
+            "beatmap_id": 1988096,
+            "identifier": "NM3",
+            "mods": "NM",
+            "sr": 7.37,
+            "title": "Vicious Heroism",
+            "artist": "Kobaryo",
+            "difficulty": "Another",
+            "beatmapset_id": 952060
+        },
+        {
+            "beatmap_id": 4083586,
+            "identifier": "NM4",
+            "mods": "NM",
+            "sr": 7.14,
+            "title": "Drenched in Air feat. Ninomae Ina'nis",
+            "artist": "Camellia",
+            "difficulty": "Ocean of Eternity",
+            "beatmapset_id": 1968798
+        },
+        {
+            "beatmap_id": 1218554,
+            "identifier": "NM5",
+            "mods": "NM",
+            "sr": 6.41,
+            "title": "Time Leaper",
+            "artist": "Hinkik",
+            "difficulty": "1/8",
+            "beatmapset_id": 575471
+        },
+        {
+            "beatmap_id": 865102,
+            "identifier": "NM6",
+            "mods": "NM",
+            "sr": 6.07,
+            "title": "Kaoru Juyouka",
+            "artist": "Akiyama Uni",
+            "difficulty": "Musk Sprout",
+            "beatmapset_id": 397764
+        },
+        {
+            "beatmap_id": 1915426,
+            "identifier": "HR1",
+            "mods": "HR",
+            "sr": 6.57,
+            "title": "NULCTRL",
+            "artist": "Silentroom",
+            "difficulty": "Pattern -0 \"NUL\"",
+            "beatmapset_id": 917159
+        },
+        {
+            "beatmap_id": 611753,
+            "identifier": "HR2",
+            "mods": "HR",
+            "sr": 7,
+            "title": "perthed again (yambabom remix)",
+            "artist": "Hitori Tori",
+            "difficulty": "Zapy's Extra",
+            "beatmapset_id": 268693
+        },
+        {
+            "beatmap_id": 3689703,
+            "identifier": "HR3",
+            "mods": "HR",
+            "sr": 7.17,
+            "title": "The Burned Tableau",
+            "artist": "seatrus",
+            "difficulty": "Translucence",
+            "beatmapset_id": 1799801
+        },
+        {
+            "beatmap_id": 3257370,
+            "identifier": "HR4",
+            "mods": "HR",
+            "sr": 6.59,
+            "title": "Period. ~ Seishin no Kousoku to Jiyuu o Tsukamu Jouka (Cut Ver.)",
+            "artist": "tsunamix_underground",
+            "difficulty": "expert.",
+            "beatmapset_id": 1594769
+        },
+        {
+            "beatmap_id": 106361,
+            "identifier": "DT1",
+            "mods": "DT",
+            "sr": 7.11,
+            "title": "Sumidagawa Karenka",
+            "artist": "seiya-murai feat.ALT",
+            "difficulty": "EXTREME",
+            "beatmapset_id": 32523
+        },
+        {
+            "beatmap_id": 103281,
+            "identifier": "DT2",
+            "mods": "DT",
+            "sr": 7.59,
+            "title": "Nyanyanyanyanyanyanya!",
+            "artist": "daniwellP",
+            "difficulty": "Collab",
+            "beatmapset_id": 31419
+        },
+        {
+            "beatmap_id": 3802841,
+            "identifier": "DT3",
+            "mods": "DT",
+            "sr": 6.94,
+            "title": "Lilieze to Enryuu Laevateinn",
+            "artist": "Kuroneko Dungeon",
+            "difficulty": "Insane",
+            "beatmapset_id": 1851159
+        },
+        {
+            "beatmap_id": 1582596,
+            "identifier": "DT4",
+            "mods": "DT",
+            "sr": 6.82,
+            "title": "Variable",
+            "artist": "Function Phantom",
+            "difficulty": "Kibbleru's Insane",
+            "beatmapset_id": 751774
+        },
+        {
+            "beatmap_id": 2627652,
+            "identifier": "DT5",
+            "mods": "DT",
+            "sr": 6.79,
+            "title": "carnation.lnk",
+            "artist": "Minami Yasuhiro",
+            "difficulty": "Hatsune Miku's Insane",
+            "beatmapset_id": 1262817
+        },
+        {
+            "beatmap_id": 1249833,
+            "identifier": "FM1",
+            "mods": "FM",
+            "sr": 6.74,
+            "title": "Re:End of a Dream",
+            "artist": "uma vs. Morimori Atsushi",
+            "difficulty": "toybot's Extra",
+            "beatmapset_id": 557039
+        },
+        {
+            "beatmap_id": 49101,
+            "identifier": "FM2",
+            "mods": "FM",
+            "sr": 5.82,
+            "title": "Astrosexy",
+            "artist": "m-flo loves CHEMISTRY",
+            "difficulty": "Sexy",
+            "beatmapset_id": 13244
+        },
+        {
+            "beatmap_id": 2007648,
+            "identifier": "FM3",
+            "mods": "FM",
+            "sr": 7.01,
+            "title": "WIGGLECORE",
+            "artist": "FLOOR BABA",
+            "difficulty": "Mun's Extreme",
+            "beatmapset_id": 957370
+        },
+        {
+            "beatmap_id": 559059,
+            "identifier": "FM4",
+            "mods": "FM",
+            "sr": 6.45,
+            "title": "Tengaku",
+            "artist": "Hanatan",
+            "difficulty": "Skystar's Extra",
+            "beatmapset_id": 220785
+        },
+        {
+            "beatmap_id": 4225699,
+            "identifier": "TB",
+            "mods": "TB",
+            "sr": 7.22,
+            "title": "REGGAETON BUT IT HAS AMEN BREAKS",
+            "artist": "ulko",
+            "difficulty": "PRENDELO",
+            "beatmapset_id": 2027860
+        }
+    ]
+}

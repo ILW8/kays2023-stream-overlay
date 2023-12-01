@@ -1,0 +1,54 @@
+@font-face {
+    font-family: 'Mont';
+    src: url('../_data/fonts/Mont-SemiBold.otf');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'Mont';
+    src: url('../_data/fonts/Mont-Bold.otf');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Din';
+    src: url('../_data/fonts/D-DIN.otf');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'Din';
+    src: url('../_data/fonts/D-DIN-Italic.otf');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Din';
+    src: url('../_data/fonts/D-DIN-Bold.otf');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Digital';
+    src: url('../_data/fonts/7segment.ttf');
+    font-weight: 500;
+}
+
+:root {
+    --accent: #ffd654;
+    --accent-light: #f8d565;
+    --accent-dark: #c2a74e;
+    --accent-mod-nm: #529cdc;
+    --accent-mod-hd: #f3c164;
+    --accent-mod-hr: #c85a46;
+    --accent-mod-dt: #c288d8;
+    --accent-mod-fm: #7a9f29;
+    --accent-mod-tb: #a1bd74;
+    --blue: #81b2eb;
+    --red: #f58178;
+    --blue-darker: #5481b4;
+    --red-darker: #be5a53;
+    --blue-dark: #3c638f;
+    --red-dark: #8b3a34;
+}

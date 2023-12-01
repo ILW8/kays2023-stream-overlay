@@ -1,0 +1,93 @@
+body,
+html {
+	padding: 0;
+	margin: 0;
+	overflow-y: hidden;
+}
+
+#main {
+	width: 1920px;
+	height: 1080px;
+	position: relative;
+	background-image: url('../_data/assets/intro_background.png');
+	font-family: 'Din';
+	color: var(--accent-light);
+}
+
+#full-overlay {
+	width: 1920px;
+	height: 1080px;
+}
+
+#teams {
+	position: absolute;
+	top: 464px;
+	left: 474px;
+	font-size: 28px;
+	letter-spacing: 6px;
+	gap: 13px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+}
+
+.team-name {
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+#vs {
+	font-style: italic;
+}
+
+#time-container {
+	position: absolute;
+	top: 369px;
+	left: 1168px;
+	width: 87px;
+	height: 27px;
+	border-radius: 3px;
+	background: rgb(248,127,75);
+	background: linear-gradient(190deg, rgba(248,127,75,1) 0%, rgba(171,102,51,1) 100%); 
+	color: rgba(255, 255, 255, 0.48);
+	font-size: 21px;
+	font-family: 'Digital';
+	text-align: right;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	letter-spacing: 2px;
+}
+
+#time {
+	margin-right: 6px;
+}
+
+#timer {
+	position: absolute;
+	top: 495px;
+	left: 105px;
+	font-size: 100px;
+	font-weight: 700;
+	letter-spacing: 10px;
+}
+
+/*Scrollbar*/
+::-webkit-scrollbar {
+	width: 0px;
+	visibility: 0;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	margin-top: 25px;
+	margin-bottom: 25px;
+	visibility: 0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: grey;
+	border-radius: 10px;
+}

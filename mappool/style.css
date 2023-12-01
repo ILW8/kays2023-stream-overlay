@@ -1,0 +1,258 @@
+:root {
+    --map-width: 512px;
+    --map-height: 94px;
+    --map-spacing: 18px;
+    --mod-width: 90px;
+}
+
+body,
+html {
+    padding: 0;
+    margin: 0;
+    overflow-y: hidden;
+    font-family: 'Din';
+    font-weight: 700;
+}
+
+#main {
+    width: 1920px;
+    height: 1080px;
+    position: relative;
+    background-image: url('../_data/assets/mappool_background.png');
+}
+
+#full-overlay {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+#mappool-area {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#mappool-container {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: calc(1 * var(--map-spacing));
+}
+
+.map-container {
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: calc(3 * var(--map-spacing));
+    row-gap: var(--map-spacing);
+}
+
+.clicker {
+    width: var(--map-width);
+    height: var(--map-height);
+    color: #ffffff;
+    transition: ease-out 400ms;
+    filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.1));
+}
+
+.mapContainer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 14px;
+    font-weight: 500;
+    box-shadow: 0 6px 0 var(--accent-dark);
+    transition: box-shadow 400ms ease;
+}
+
+.mapTop {
+    height: 57px;
+    background-color: var(--accent);
+    border-radius: 14px 14px 0 0;
+    color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    transition: background-color 400ms ease;
+}
+
+.mapTitle {
+    font-size: 25px;
+    margin-top: 6px;
+    margin-left: 114px;
+    width: calc(var(--map-width) - 122px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.mapArtist {
+    font-size: 15px;
+    margin-left: 114px;
+    width: calc(var(--map-width) - 122px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.mapBottom {
+    width: 100%;
+    height: calc(var(--map-height) - 57px);
+    border-radius: 0 0 14px 14px;
+    background-color: #fcfcfc;
+    display: flex;
+}
+
+.mapDiff {
+    font-size: 17px;
+    letter-spacing: 0.5px;
+    margin-left: 114px;
+    margin-top: 9px;
+    width: calc(var(--map-width) - 116px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.modIcon {
+    width: 90px;
+    height: 100%;
+    font-size: 23px;
+    letter-spacing: 4px;
+    font-weight: 700;
+    margin-top: -1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.mapImage {
+    z-index: 2;
+    width: 77px;
+    height: 77px;
+    border-radius: 14px 14px 0 0;
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+    border: 3px solid var(--accent-dark);
+    border-bottom: none;
+    background-color: #202020;
+    background-size: cover;
+    background-position: center;
+    transition: border-color 400ms ease;
+}
+
+.pickingStatus {
+    z-index: 10;
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    opacity: 1;
+}
+
+.blinkOverlay {
+    z-index: 2;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 14px;
+    background-color: #fcfcfc;
+    box-shadow: 0 6px 0 #fcfcfc;
+    opacity: 0.0;
+}
+
+@keyframes blinker {
+    5% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes slowPulse {
+    50% {
+        opacity: 0.1;
+    }
+}
+
+.mapNoise {
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: url('../_data/assets/background-noise.png');
+    opacity: 0.5;
+    mix-blend-mode: soft-light;
+    user-select: none;
+}
+
+#controls {
+    padding: 12px;
+    position: absolute;
+    left: 1920px;
+    top: 0;
+}
+
+.pickButton {
+    width: 240px;
+    height: 40px;
+    margin-bottom: 12px;
+    font-size: 22px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    color: var(--red);
+}
+
+.switchPickButton {
+    color: #202020;
+    background-color: #e6e6e6;
+    cursor: pointer;
+}
+
+.switchPickButton:hover {
+    color: #202020;
+    background-color: #bebebe;
+}
+
+#autoPickButton {
+    background-color: #fc9f9f;
+}
+
+/*Scrollbar*/
+::-webkit-scrollbar {
+    width: 0px;
+    visibility: 0;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    visibility: 0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius: 10px;
+}

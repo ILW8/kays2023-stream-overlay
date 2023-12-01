@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="style.css?t=<?php echo time()?>">
+	<link rel="stylesheet" href="../shared/styles.css?t=<?php echo time()?>">
+	<script src="../_data/deps/reconnecting-websocket.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+	<div id="main">
+		<div id="full-overlay">
+			<div id="stage-name">grand finals</div>
+			<div id="teams">
+				<div id="red-team" class="team">
+					<div id="red-name" class="team-name">Red Team</div>
+					<div id="red-score" class="team-score">3</div>
+				</div>
+				<div id="blue-team" class="team">
+					<div id="blue-name" class="team-name">Blue Team</div>
+					<div id="blue-score" class="team-score">6</div>
+				</div>
+				<div id="win-team" class="team win">
+					<div id="win-name-name" class="team-name">Blue Team wins</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="index.js"></script>
+</body>
+
+</html>

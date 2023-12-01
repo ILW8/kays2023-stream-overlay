@@ -1,0 +1,79 @@
+body,
+html {
+	padding: 0;
+	margin: 0;
+	overflow-y: hidden;
+}
+
+#main {
+	width: 1920px;
+	height: 1080px;
+	position: relative;
+	background-image: url('../_data/assets/winner_background.png');
+	font-family: 'Din';
+	color: #555453;
+}
+
+#stage-name {
+	position: absolute;
+	top: 264px;
+	left: 83px;
+	font-size: 43px;
+	text-transform: lowercase;
+	font-style: italic;
+	letter-spacing: 10px;
+}
+
+#teams {
+	position: absolute;
+	top: 400px;
+	left: 82px;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.team {
+	font-size: 40px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.team-name {
+	font-weight: 700;
+}
+
+.team-score {
+	text-align: center;
+	width: 40px;
+	margin-left: 40px;
+}
+
+.win {
+	margin-top: 16px;
+	text-transform: lowercase;
+	font-style: italic;
+}
+
+#win-name-name {
+	font-weight: 500;
+}
+
+/*Scrollbar*/
+::-webkit-scrollbar {
+	width: 0px;
+	visibility: 0;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	margin-top: 25px;
+	margin-bottom: 25px;
+	visibility: 0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: grey;
+	border-radius: 10px;
+}
