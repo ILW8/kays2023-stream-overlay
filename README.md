@@ -4,7 +4,7 @@
 
 scene collection provided [here](obs-kays2023.json), make sure to check everything is correct
 
-### main scene  
+### GAMEPLAY SCENE  
 | source            | url/path                                             | width | height | x         | y         |
 |-------------------|------------------------------------------------------|-------|--------|-----------|-----------|
 | vc_overlay*       |                                                      | 500   | 50     | 16        | 909       |
@@ -20,7 +20,7 @@ scene collection provided [here](obs-kays2023.json), make sure to check everythi
 | 2      | 968  | 176  |
 | 3      | 968  | 536  |
 
-### mappool
+### MAPPOOL SCENE
 | source           | url/path                                                | width | height | x  | y    |
 |------------------|---------------------------------------------------------|-------|--------|----|------|
 | vc_overlay       |                                                         | 480   | 100    | 16 | 1014 |
@@ -28,14 +28,14 @@ scene collection provided [here](obs-kays2023.json), make sure to check everythi
 
 <sup>*"control panel" featuring autopick function is off the screen, use the interact menu to activate</sup>
 
-### intro*
+### INTRO SCENE
 | source           | url/path                                                | width | height | x | y   |
 |------------------|---------------------------------------------------------|-------|--------|---|-----|
-| intro_overlay    | http://localhost:24050/kays2023-stream-overlay/intro/   | 1920  | 1080   | 0 | 0   |
+| intro_overlay*    | http://localhost:24050/kays2023-stream-overlay/intro/   | 1920  | 1080   | 0 | 0   |
 
 <sup>*data pulled from `_data/coming_up.json`, requires exchanging between matches</sup>
 
-### winner
+### WINNER SCENE
 | source           | url/path                                                | width | height | x | y   |
 |------------------|---------------------------------------------------------|-------|--------|---|-----|
 | winner_overlay   | http://localhost:24050/kays2023-stream-overlay/winner/  | 1920  | 1080   | 0 | 0   |
