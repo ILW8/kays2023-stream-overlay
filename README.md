@@ -2,7 +2,7 @@
 
 ## OBS Setup
 
-scene collection provided [here](KAYS2023.json), make sure to check everything is correct
+scene collection provided [here](KAYS2023.json), make sure to check everything is correct (especially audio devices)
 
 ### GAMEPLAY SCENE  
 | source            | url/path                                             | width | height | x         | y         |
