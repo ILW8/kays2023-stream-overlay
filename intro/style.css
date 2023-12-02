@@ -9,9 +9,18 @@ html {
 	width: 1920px;
 	height: 1080px;
 	position: relative;
-	background-image: url('../_data/assets/intro_background.png');
+	/* background-image: url('../_data/assets/intro_background.png'); */
 	font-family: 'Din';
 	color: var(--accent-light);
+}
+
+#bg-video {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	min-width: 100%;
+	min-height: 100%;
+	z-index: -10;
 }
 
 #full-overlay {
@@ -45,9 +54,9 @@ html {
 	position: absolute;
 	top: 369px;
 	left: 1168px;
-	width: 87px;
+	width: 86.5px;
 	height: 27px;
-	border-radius: 3px;
+	border-radius: 4px;
 	background: rgb(248,127,75);
 	background: linear-gradient(190deg, rgba(248,127,75,1) 0%, rgba(171,102,51,1) 100%); 
 	color: rgba(255, 255, 255, 0.48);
