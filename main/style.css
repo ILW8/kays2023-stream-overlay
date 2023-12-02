@@ -423,7 +423,7 @@ html {
 	display: flex;
 	text-align: left;
 	font-size: 19px;
-	line-height: 24.5px;
+	line-height: 24px;
     padding-right: 16px;
     width: fit-content;
 }
@@ -454,11 +454,11 @@ html {
 	color: #b3b3b3;
 }
 
-.chatName.red {
+.chatName.left {
 	color: var(--red);
 }
 
-.chatName.blue {
+.chatName.right {
 	color: var(--blue);
 }
 
