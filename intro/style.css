@@ -28,6 +28,15 @@ html {
 	height: 1080px;
 }
 
+#funny-line {
+	height: 194px;
+	width: 1px;
+	position: absolute;
+	top: 425.5px;
+	left: 432px;
+	background-color: var(--accent-light);
+}
+
 #teams {
 	position: absolute;
 	top: 464px;
