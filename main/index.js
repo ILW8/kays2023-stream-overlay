@@ -3,7 +3,6 @@ let stage_data, players;
 (async () => {
 	$.ajaxSetup({ cache: false });
 	stage_data = await $.getJSON('../_data/beatmaps.json');
-	players = await $.getJSON('../_data/players.json');
 
 	if (stage_data) {
 		document.getElementById('stage-name').innerHTML = stage_data.stage || '//';
@@ -103,10 +102,8 @@ socket.onmessage = async event => {
 		map_image.style.backgroundImage = `url('http://${location.host}/Songs/${data.menu.bm.path.full}')`;
 	}
 
-	if (stage_data && !statsCheck && (md5 !== data.menu.bm.md5 || title_ !== data.menu.bm.metadata.title)) {
-		statsCheck = true;
+	if (stage_data && (md5 !== data.menu.bm.md5 || title_ !== data.menu.bm.metadata.title)) {
 		await delay(500);
-		statsCheck = false;
 		changeStats = true;
 	}
 
@@ -238,7 +235,7 @@ socket.onmessage = async event => {
 
 	let now = Date.now();
 	if (fullTime !== data.menu.bm.time.mp3) { fullTime = data.menu.bm.time.mp3; onepart = 496 / fullTime; }
-	if (seek !== data.menu.bm.time.current && fullTime && now - last_strain_update > 100) {
+	if (seek !== data.menu.bm.time.current && fullTime && now - last_strain_update > 300) {
 		last_strain_update = now;
 		seek = data.menu.bm.time.current;
 
@@ -257,7 +254,7 @@ socket.onmessage = async event => {
 		let scores = [];
 		let playerCount = data.tourney.ipcClients.length;
 		for (let i = 0; i < playerCount; i++) {
-			let score = data.tourney.ipcClients[i];
+			let score = data.tourney.ipcClients[i].gameplay.score;
 			if (data.tourney.ipcClients[i]?.gameplay?.mods?.str?.toUpperCase().includes('EZ')) score *= 2;
 			scores.push({id: i, score});
 		}
