@@ -239,7 +239,7 @@ socket.onmessage = async event => {
 		last_strain_update = now;
 		seek = data.menu.bm.time.current;
 
-		if (scoreRed == 0 || scoreBlue == 0) {
+		if (scoreRed == 0 || scoreBlue == 0 || !scoreVisible) {
 			progressChart.style.maskPosition = '-496px 0px';
 			progressChart.style.webkitMaskPosition = '-496px 0px';
 		}
