@@ -335,7 +335,7 @@ html {
 
 .stats-container {
 	position: absolute;
-	top: 16px;
+	top: 12px;
 	right: 20px;
 	display: flex;
 	justify-content: flex-end;
