@@ -54,10 +54,11 @@ socket.onmessage = async event => {
 			background.style.backgroundColor = 'rgba(255, 87, 87, 0.1)';
 		}
 
-		nameText.style.transition = 'transform 100ms cubic-bezier(0, 1, 0.4, 1)';
-		nameText.style.transform = 'scale(1.1)';
-		nameStroke.style.transition = 'transform 100ms cubic-bezier(0, 1, 0.4, 1)';
-		nameStroke.style.transform = 'scale(1.1)';
+		nameText.style.transition = 'transform 100ms cubic-bezier(0, 1, 0.4, 1), color 100ms cubic-bezier(0, 1, 0.4, 1)';
+		nameText.style.transform = 'scale(1.15)';
+		nameText.style.color = 'var(--red-bright)';
+		nameStroke.style.transition = 'opacity 15ms cubic-bezier(0, 1, 0.4, 1)';
+		nameStroke.style.opacity = '0';
 
 		setTimeout(() => {
 			if (bgFlash) {
@@ -65,10 +66,12 @@ socket.onmessage = async event => {
 				background.style.backgroundColor = 'rgba(255, 87, 87, 0)';
 			}
 
-			nameText.style.transition = 'transform 500ms cubic-bezier(0.42, 0.04, 0.49, 0.97)';
+			nameText.style.transition = 'transform 500ms cubic-bezier(0.42, 0.04, 0.49, 0.97), color 500ms cubic-bezier(0.42, 0.04, 0.49, 0.97)';
 			nameText.style.transform = 'scale(1.0)';
-			nameStroke.style.transition = 'transform 500ms cubic-bezier(0.42, 0.04, 0.49, 0.97)';
-			nameStroke.style.transform = 'scale(1.0)';
+			nameText.style.color = color === 'red' ? 'var(--red)' : 'var(--blue)';
+
+			nameStroke.style.transition = 'opacity 250ms cubic-bezier(0.42, 0.04, 0.49, 0.97) 500ms';
+			nameStroke.style.opacity = '1';
 		}, 150);
 	}
 	combo = client.gameplay.combo.current;
