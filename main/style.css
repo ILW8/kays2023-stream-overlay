@@ -172,6 +172,23 @@ html {
 	align-items: center;
 }
 
+.combo {
+	position: absolute;
+	top: 128px;
+	font-size: 24px;
+	letter-spacing: -1.2px;
+	height: 32px;
+	display: flex;
+	align-items: center;
+}
+
+.combo.red {
+	right: 972px;
+}
+.combo.blue {
+	left: 972px;
+}
+
 .score.red {
 	right: 972px;
 }
