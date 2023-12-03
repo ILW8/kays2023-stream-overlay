@@ -1,0 +1,37 @@
+body,
+html {
+	padding: 0;
+	margin: 0;
+	overflow-y: hidden;
+	font-family: 'Din', 'D-DIN';
+}
+
+#main {
+	position: relative;
+}
+
+#full-overlay {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+	width: 100vw;
+	height: 100vh;
+	border-radius: 10px;
+	background-color: rgba(255, 87, 87, 0);
+	transition: background-color 100ms cubic-bezier(0, 1, 0.4, 1);
+}
+
+.name {
+	position: absolute;
+	bottom: 4px;
+	right: 16px;
+	font-size: 40px;
+	transform-origin: bottom right;
+	transition: transform 100ms cubic-bezier(0, 1, 0.4, 1);
+	transition-property: background-color, font-size, transform, color, background-color;
+}
+
+#name-stroke {
+	color: #ffffff;
+	paint-order: stroke fill;
+}
