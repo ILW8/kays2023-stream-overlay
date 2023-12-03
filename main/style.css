@@ -287,6 +287,14 @@ html {
     text-overflow: ellipsis;
 }
 
+#pickedBy {
+	background-color: var(--accent);
+	color: #68561E;
+	position: absolute;
+	top: -16px;
+	padding: 4px;
+}
+
 #mapBottom {
     width: 100%;
     height: calc(94px - 57px);

@@ -4,6 +4,13 @@ let mappool;
 	mappool = await $.getJSON('../_data/beatmaps.json');
 })();
 
+function setCookie(cname, cvalue) {
+	const d = new Date();
+	d.setTime(d.getTime() + (24*60*60*1000));
+	let expires = "expires="+ d.toUTCString();
+	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
 let socket = new ReconnectingWebSocket('ws://' + location.host + '/ws');
 
 socket.onopen = () => { console.log('Successfully Connected'); };
@@ -18,6 +25,7 @@ let hasSetup = false;
 let redName = 'ermm uhhh umm', blueName = 'Season in the sun';
 let tempMapID = 0;
 let currentPicker = 'red';
+setCookie("mapPickedBy", "blue");
 let enableAutoPick = false;
 let selectedMaps = [];
 
@@ -89,7 +97,7 @@ class Beatmap {
 		this.modIcon.id = `${this.layerName}MODICON`;
 		this.modIcon.setAttribute('class', 'modIcon');
 		this.modIcon.innerHTML = `${this.modID}`;
-		
+
 
 		this.top = document.createElement('div');
 		this.top.id = `${this.layerName}TOP`;
@@ -146,7 +154,7 @@ const pickMap = (bm, playerName, color) => {
 	lastPicked = bm;
 	switchPick(color);
 	selectedMaps.push(bm.beatmapID);
-	
+
 	bm.top.style.backgroundColor = `var(--${color})`;
 	bm.bottom.style.color = `var(--${color})`;
 	bm.image.style.borderColor = `var(--${color}-darker)`;
@@ -175,9 +183,16 @@ const resetMap = bm => {
 }
 
 const switchPick = color => {
-	if (!color) currentPicker = currentPicker == 'red' ? 'blue' : 'red';
-	else currentPicker = color == 'red' ? 'blue' : 'red';
-	if (currentPicker == 'red') {
+
+	if (!color) {
+		currentPicker = currentPicker === 'red' ? 'blue' : 'red';
+	} else {
+		currentPicker = color === 'red' ? 'blue' : 'red';
+	}
+
+	setCookie("mapPickedBy", currentPicker === 'red' ? 'blue' : 'red')
+
+	if (currentPicker === 'red') {
 		pick_button.style.color = 'var(--red)';
 		pick_button.innerHTML = 'RED PICK';
 	}

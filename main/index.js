@@ -15,6 +15,7 @@ let map_image = document.getElementById('mapImage');
 let title = document.getElementById('title');
 let artist = document.getElementById('artist');
 let diff = document.getElementById('diff');
+let picked_by = document.getElementById('pickedBy');
 
 let red_name = document.getElementById('red-name');
 let red_points = document.getElementById('red-points');
@@ -67,6 +68,35 @@ let starsBlue, scoreBlue, nameBlue;
 
 scoreRed = 0;
 scoreBlue = 0;
+
+function getCookie(cname) {
+	let name = cname + "=";
+	let decodedCookie = decodeURIComponent(document.cookie);
+	let ca = decodedCookie.split(';');
+	for(let i = 0; i <ca.length; i++) {
+		let c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		}
+	}
+	return "";
+}
+
+
+setInterval(() => {
+	let map_picked_by = getCookie("mapPickedBy")
+	if (!map_picked_by){
+		return;
+	}
+	if (picked_by.textContent !== `Picked by ${map_picked_by}`) {
+		picked_by.textContent = `Picked by ${map_picked_by}`;
+		picked_by.style.backgroundColor = `var(--${map_picked_by})`;
+	}
+})
+
 
 socket.onmessage = async event => {
 	let data = JSON.parse(event.data);
