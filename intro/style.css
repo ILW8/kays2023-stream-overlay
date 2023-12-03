@@ -67,7 +67,7 @@ html {
 	height: 27px;
 	border-radius: 4px;
 	background: rgb(248,127,75);
-	background: linear-gradient(190deg, rgba(248,127,75,1) 0%, rgba(171,102,51,1) 100%); 
+	background: linear-gradient(190deg, rgba(248,127,75,1) 0%, rgba(171,102,51,1) 100%);
 	color: rgba(255, 255, 255, 0.48);
 	font-size: 21px;
 	font-family: 'Digital';
@@ -108,4 +108,30 @@ html {
 ::-webkit-scrollbar-thumb {
 	background: grey;
 	border-radius: 10px;
+}
+
+.pickButton {
+	width: 360px;
+	height: 40px;
+	margin-bottom: 12px;
+	font-size: 22px;
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	color: #202020;
+	background-color: #e6e6e6;
+	cursor: pointer;
+}
+
+.pickButton:hover {
+	color: #202020;
+	background-color: #bebebe;
+}
+
+#controls {
+	padding: 12px;
+	position: absolute;
+	left: 1920px;
+	top: 0;
 }
