@@ -20,11 +20,13 @@ let red_name = document.getElementById('red-name');
 let red_points = document.getElementById('red-points');
 let red_score = document.getElementById('red-score');
 let red_pfp = document.getElementById('red-pfp');
+let red_combo = document.getElementById('red-combo');
 
 let blue_name = document.getElementById('blue-name');
 let blue_points = document.getElementById('blue-points');
 let blue_score = document.getElementById('blue-score');
 let blue_pfp = document.getElementById('blue-pfp');
+let blue_combo = document.getElementById('blue-combo');
 
 let score_row = document.getElementById('score-row');
 let lead_bar = document.getElementById('lead-bar');
@@ -40,7 +42,9 @@ socket.onopen = () => { console.log('Successfully Connected'); };
 
 let animation = {
 	red_score: new CountUp('red-score', 0, 0, 0, .3, { useEasing: true, useGrouping: true, separator: ' ', decimal: '.' }),
+	red_combo: new CountUp('red-combo', 0, 0, 0, .3, { useEasing: false, useGrouping: true, separator: ' ', decimal: '.', suffix: 'x' }),
 	blue_score: new CountUp('blue-score', 0, 0, 0, .3, { useEasing: true, useGrouping: true, separator: ' ', decimal: '.' }),
+	blue_combo: new CountUp('blue-combo', 0, 0, 0, .3, { useEasing: false, useGrouping: true, separator: ' ', decimal: '.', suffix: 'x' }),
 	score_diff: new CountUp('score-diff', 0, 0, 0, .3, { useEasing: true, useGrouping: true, separator: ' ', decimal: '.' }),
 }
 
@@ -62,8 +66,8 @@ let chatLen = 0;
 
 let bestOf, firstTo;
 let scoreVisible, starsVisible;
-let starsRed, scoreRed, nameRed;
-let starsBlue, scoreBlue, nameBlue;
+let starsRed, scoreRed, nameRed, comboRed;
+let starsBlue, scoreBlue, nameBlue, comboBlue;
 
 scoreRed = 0;
 scoreBlue = 0;
@@ -252,21 +256,29 @@ socket.onmessage = async event => {
 
 	if (scoreVisible) {
 		let scores = [];
+		let combos = [];
 		let playerCount = data.tourney.ipcClients.length;
 		for (let i = 0; i < playerCount; i++) {
 			let score = data.tourney.ipcClients[i].gameplay.score;
 			if (data.tourney.ipcClients[i]?.gameplay?.mods?.str?.toUpperCase().includes('EZ')) score *= 2;
 			scores.push({id: i, score});
+			combos.push({id: i, combo: data.tourney.ipcClients[i].gameplay.combo.current});
 		}
 
 		scoreRed = scores.filter(s => s.id < playerCount / 2).map(s => s.score).reduce((a, b) => a + b);
 		scoreBlue = scores.filter(s => s.id >= playerCount / 2).map(s => s.score).reduce((a, b) => a + b);
+		comboRed = combos.filter(s => s.id < playerCount / 2).map(s => s.combo).reduce((a, b) => a + b);
+		comboBlue = combos.filter(s => s.id >= playerCount / 2).map(s => s.combo).reduce((a, b) => a + b);
 
 		let scoreDiff = Math.abs(scoreRed - scoreBlue);
 		let maxScore = Math.max(scoreRed, scoreBlue, 3000000)
 
 		animation.red_score.update(scoreRed);
 		animation.blue_score.update(scoreBlue);
+
+		animation.red_combo.update(comboRed);
+		animation.blue_combo.update(comboBlue);
+
 		animation.score_diff.update(scoreDiff);
 
 
