@@ -9,7 +9,7 @@ const id = params.get('id');
 const placeholder = params.get('placeholder');
 const fontSize = params.get('fontSize');
 const color = params.get('color');
-const bgFlash = params.get('flashBackground');
+const bgFlash = params.get('flashBackground') === 'true';
 
 let nameTemp = placeholder || '';
 let combo = 0;
