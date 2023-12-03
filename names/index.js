@@ -15,22 +15,13 @@ let nameTemp = placeholder || '';
 let combo = 0;
 let comboThreshold = 10;
 let nameText = document.getElementById('name');
-let nameStroke = document.getElementById('name-stroke');
 let background = document.getElementById('full-overlay');
 
 (() => {
 	if (fontSize) {
 		nameText.style.fontSize = `${fontSize}px`
-		nameStroke.style.fontSize = `${fontSize}px`
-
 		nameText.style.bottom = `${Math.floor(fontSize / 2)}px`
-		nameStroke.style.bottom = `${Math.floor(fontSize / 2)}px`
-
 		nameText.style.right = `${Math.floor(fontSize / 2)}px`
-		nameStroke.style.right = `${Math.floor(fontSize / 2)}px`
-
-		nameStroke.style.webkitTextStroke = `${Math.floor(fontSize / 4)}px #ffffff`
-		nameStroke.style.textShadow = `${Math.floor(fontSize / 10)}px ${Math.floor(fontSize / 10)}px 0 #ffffff`
 	}
 
 	if (color) {
@@ -40,12 +31,11 @@ let background = document.getElementById('full-overlay');
 
 socket.onmessage = async event => {
 	let data = JSON.parse(event.data);
-	let client = data.tourney.ipcClients[id];
+	let client = data.tourney?.ipcClients[id];
 
 	if (nameTemp !== client.spectating.name) {
-		nameTemp = client.spectating.name;
+		nameTemp = client.spectating.name || '';
 		nameText.innerHTML = nameTemp == '' ? placeholder : nameTemp;
-		nameStroke.innerHTML = nameTemp == '' ? placeholder : nameTemp;
 	}
 
 	if (data.tourney.manager.bools.scoreVisible && combo >= 10 && client.gameplay.combo.current < combo) {
@@ -57,8 +47,6 @@ socket.onmessage = async event => {
 		nameText.style.transition = 'transform 100ms cubic-bezier(0, 1, 0.4, 1), color 100ms cubic-bezier(0, 1, 0.4, 1)';
 		nameText.style.transform = 'scale(1.15)';
 		nameText.style.color = 'var(--red-bright)';
-		nameStroke.style.transition = 'opacity 15ms cubic-bezier(0, 1, 0.4, 1)';
-		nameStroke.style.opacity = '0';
 
 		setTimeout(() => {
 			if (bgFlash) {
@@ -69,9 +57,6 @@ socket.onmessage = async event => {
 			nameText.style.transition = 'transform 500ms cubic-bezier(0.42, 0.04, 0.49, 0.97), color 500ms cubic-bezier(0.42, 0.04, 0.49, 0.97)';
 			nameText.style.transform = 'scale(1.0)';
 			nameText.style.color = color === 'red' ? 'var(--red)' : 'var(--blue)';
-
-			nameStroke.style.transition = 'opacity 250ms cubic-bezier(0.42, 0.04, 0.49, 0.97) 500ms';
-			nameStroke.style.opacity = '1';
 		}, 150);
 	}
 	combo = client.gameplay.combo.current;
