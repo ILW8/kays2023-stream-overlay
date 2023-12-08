@@ -1,7 +1,11 @@
-let mappool;
+let mappool, stage_data;
+const point_rotation_red = [-12, 15, -3, 18, 9, 1, -19];
+const point_rotation_blue = [-8, -14, 16, 0, 18, 6, 15];
 (async () => {
 	$.ajaxSetup({ cache: false });
 	mappool = await $.getJSON('../_data/beatmaps.json');
+	stage_data = await $.getJSON('../_data/beatmaps.json');
+	if (stage_data) document.getElementById('stage-name').innerHTML = stage_data.stage || '//';
 })();
 
 let socket = new ReconnectingWebSocket('ws://' + location.host + '/ws');
@@ -13,9 +17,32 @@ socket.onerror = error => { console.log('Socket Error: ', error); };
 let pick_button = document.getElementById('pickButton');
 let autopick_button = document.getElementById('autoPickButton');
 
+let red_name = document.getElementById('red-name');
+let red_points = document.getElementById('red-points');
+
+let blue_name = document.getElementById('blue-name');
+let blue_points = document.getElementById('blue-points');
+
+let chat_container = document.getElementById('chat-container');
+let chat = document.getElementById('chat');
+let progressChart = document.getElementById('progress');
+let strain_container = document.getElementById('strains-container');
+
+let image, title_, artist_, diff_, modid_, replay_, mapid, md5;
+let last_score_update = 0, last_strain_update = 0;
+
+let tempStrains, seek, fullTime;
+let changeStats = false;
+let statsCheck = false;
+
+let chatLen = 0;
+
+let bestOf, firstTo;
+let starsRed, starsBlue;
+
 let beatmaps = new Set();
 let hasSetup = false;
-let redName = 'ermm uhhh umm', blueName = 'Season in the sun';
+let redName = 'Red Team', blueName = 'Blue Team';
 let tempMapID = 0;
 let currentPicker = 'red';
 let enableAutoPick = false;
@@ -26,9 +53,6 @@ socket.onmessage = async event => {
 
 	if (!hasSetup) setupBeatmaps();
 
-	if (redName !== data.tourney.manager.teamName.left && data.tourney.manager.teamName.left) { redName = data.tourney.manager.teamName.left || 'Player 1'; }
-	if (blueName !== data.tourney.manager.teamName.right && data.tourney.manager.teamName.right) { blueName = data.tourney.manager.teamName.right || 'Player 2'; }
-
 	if (tempMapID !== data.menu.bm.id && data.menu.bm.id != 0) {
 		if (tempMapID == 0) tempMapID = data.menu.bm.id;
 		else {
@@ -36,6 +60,133 @@ socket.onmessage = async event => {
 			let pickedMap = Array.from(beatmaps).find(b => b.beatmapID == tempMapID);
 			if (pickedMap && enableAutoPick && !selectedMaps.includes(tempMapID)) pickMap(Array.from(beatmaps).find(b => b.beatmapID == tempMapID), currentPicker == 'red' ? redName : blueName, currentPicker);
 		}
+	}
+
+	if (stage_data && (md5 !== data.menu.bm.md5 || title_ !== data.menu.bm.metadata.title)) {
+		await delay(500);
+		changeStats = true;
+	}
+
+	if (changeStats) {
+		changeStats = false;
+
+		md5 = data.menu.bm.md5;
+		mapid = data.menu.bm.id;
+		map = stage_data?.beatmaps ? stage_data.beatmaps.find(m => m.beatmap_id == data.menu.bm.id) || { id: data.menu.bm.id, mods: 'XX', identifier: '' } : { mods: 'XX' };
+		let mod_ = map.mods;
+		let stats = getModStats(data.menu.bm.stats.CS, data.menu.bm.stats.AR, data.menu.bm.stats.OD, data.menu.bm.stats.BPM.max, mod_);
+
+		document.getElementById('cs').innerHTML = `${stats.cs}`;
+		document.getElementById('ar').innerHTML = `${stats.ar}`;
+		document.getElementById('sr').innerHTML = map?.sr || data.menu.bm.stats.fullSR;
+		document.getElementById('bpm').innerHTML = `${map?.bpm || stats.bpm}`;
+
+		let len = data.menu.bm.time.full - data.menu.bm.time.firstObj;
+		let mins = Math.trunc((len / stats.speed || 1) / 1000 / 60);
+		let secs = Math.trunc((len / stats.speed || 1) / 1000 % 60);
+		document.getElementById('len').innerHTML = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+	}
+
+	if (tempStrains != JSON.stringify(data.menu.pp.strains) && window.strainGraph) {
+		tempStrains = JSON.stringify(data.menu.pp.strains);
+		if (data.menu.pp.strains) {
+			let temp_strains = smooth(data.menu.pp.strains, 5);
+			let new_strains = [];
+			for (let i = 0; i < 60; i++) {
+				new_strains.push(temp_strains[Math.floor(i * (temp_strains.length / 60))]);
+			}
+			new_strains = [0, ...new_strains, 0];
+
+			config.data.datasets[0].data = new_strains;
+			config.data.labels = new_strains;
+			config.options.scales.y.max = Math.max(...new_strains);
+			configProgress.data.datasets[0].data = new_strains;
+			configProgress.data.labels = new_strains;
+			configProgress.options.scales.y.max = Math.max(...new_strains);
+			window.strainGraph.update();
+			window.strainGraphProgress.update();
+		}
+		else {
+			config.data.datasets[0].data = [];
+			config.data.labels = [];
+			configProgress.data.datasets[0].data = [];
+			configProgress.data.labels = [];
+			window.strainGraph.update();
+			window.strainGraphProgress.update();
+		}
+	}
+
+	let now = Date.now();
+	if (fullTime !== data.menu.bm.time.mp3) { fullTime = data.menu.bm.time.mp3; onepart = 496 / fullTime; }
+	if (seek !== data.menu.bm.time.current && fullTime && now - last_strain_update > 300) {
+		last_strain_update = now;
+		seek = data.menu.bm.time.current;
+
+		let maskPosition = `${-496 + onepart * seek}px 0px`;
+		progressChart.style.maskPosition = maskPosition;
+		progressChart.style.webkitMaskPosition = maskPosition;
+	}
+
+	const createPoint = (color, index) => {
+		let node = document.createElement('div');
+		node.className = `star ${color}`;
+		node.id = `${color}${index}`;
+		let rotation = color == 'red' ? point_rotation_red[index] : point_rotation_blue[index];
+		node.style.transform = `rotate(${rotation}deg)`;
+		document.getElementById(`${color}-points`).appendChild(node);
+	}
+
+	if (bestOf !== data.tourney.manager.bestOF) {
+		let newmax = Math.ceil(data.tourney.manager.bestOF / 2);
+		if (bestOf === undefined) {
+			for (let i = 1; i <= newmax; i++) {
+				createPoint('red', i);
+				createPoint('blue', i);
+			}
+		}
+		if (bestOf < data.tourney.manager.bestOF) {
+			for (let i = firstTo + 1; i <= newmax; i++) {
+				createPoint('red', i);
+				createPoint('blue', i);
+			}
+		} else {
+			for (let i = firstTo; i > newmax; i--) {
+				document.getElementById('red-points').removeChild(document.getElementById(`red${i}`));
+				document.getElementById('blue-points').removeChild(document.getElementById(`blue${i}`));
+			}
+		}
+		bestOf = data.tourney.manager.bestOF;
+		firstTo = newmax;
+	}
+
+	if (starsRed !== data.tourney.manager.stars.left) {
+		starsRed = data.tourney.manager.stars.left;
+		for (let i = 1; i <= starsRed; i++) {
+			document.getElementById(`red${i}`).style.opacity = 1;
+		}
+		for (let i = starsRed + 1; i <= firstTo; i++) {
+			document.getElementById(`red${i}`).style.opacity = 0.3;
+		}
+	}
+
+	if (starsBlue !== data.tourney.manager.stars.right) {
+		starsBlue = data.tourney.manager.stars.right;
+		for (let i = 1; i <= starsBlue; i++) {
+			document.getElementById(`blue${i}`).style.opacity = 1;
+		}
+		for (let i = starsBlue + 1; i <= firstTo; i++) {
+			document.getElementById(`blue${i}`).style.opacity = 0.3;
+		}
+	}
+
+	if (data.tourney.manager.teamName.left && redName !== data.tourney.manager.teamName.left) {
+		redName = data.tourney.manager.teamName.left;
+		red_name.innerHTML = redName;
+	}
+
+	if (data.tourney.manager.teamName.right && blueName !== data.tourney.manager.teamName.right) {
+		blueName = data.tourney.manager.teamName.right;
+		blue_name.innerHTML = blueName;
 	}
 }
 
@@ -89,7 +240,8 @@ class Beatmap {
 		this.modIcon.id = `${this.layerName}MODICON`;
 		this.modIcon.setAttribute('class', 'modIcon');
 		this.modIcon.innerHTML = `${this.modID}`;
-		
+		this.modIcon.style.backgroundColor = `var(--accent-mod-${this.mods.toLowerCase()})`
+
 
 		this.top = document.createElement('div');
 		this.top.id = `${this.layerName}TOP`;
@@ -101,18 +253,19 @@ class Beatmap {
 		this.bottom.id = `${this.layerName}BOTTOM`;
 		this.bottom.setAttribute('class', 'mapBottom');
 		this.bottom.appendChild(this.diff);
-		this.bottom.appendChild(this.modIcon);
-		this.bottom.style.color = `var(--accent-dark`;
 
 		this.clicker.setAttribute('class', 'clicker');
 		this.mapContainer.appendChild(this.image);
 		this.mapContainer.appendChild(this.top);
 		this.mapContainer.appendChild(this.bottom);
+		this.mapContainer.appendChild(this.modIcon);
 		clickerObj.appendChild(this.mapContainer);
 		// clickerObj.appendChild(this.pickedStatus);
 		clickerObj.appendChild(this.blinkOverlay);
 	}
 }
+
+const delay = async time => new Promise(resolve => setTimeout(resolve, time));
 
 async function setupBeatmaps() {
 	hasSetup = true;
@@ -146,9 +299,8 @@ const pickMap = (bm, playerName, color) => {
 	lastPicked = bm;
 	switchPick(color);
 	selectedMaps.push(bm.beatmapID);
-	
+
 	bm.top.style.backgroundColor = `var(--${color})`;
-	bm.bottom.style.color = `var(--${color})`;
 	bm.image.style.borderColor = `var(--${color}-darker)`;
 	bm.mapContainer.style.boxShadow = `0px 6px 0px var(--${color}-darker)`;
 	bm.blinkOverlay.style.animation = 'blinker 1s cubic-bezier(0.36, 0.06, 0.01, 0.57) 300ms 6, slowPulse 5000ms ease-in-out 6000ms 8';
@@ -159,7 +311,6 @@ const banMap = (bm, playerName, color) => {
 	selectedMaps.push(bm.beatmapID);
 
 	bm.top.style.backgroundColor = `var(--${color}-dark)`;
-	bm.bottom.style.color = `var(--${color}-dark)`;
 	bm.image.style.borderColor = `var(--${color}-dark)`;
 	bm.mapContainer.style.boxShadow = `0px 6px 0px var(--${color}-dark)`;
 	bm.blinkOverlay.style.animation = 'none';
@@ -168,7 +319,6 @@ const banMap = (bm, playerName, color) => {
 const resetMap = bm => {
 	selectedMaps = selectedMaps.filter(e => e != bm.beatmapID);
 	bm.top.style.backgroundColor = `var(--accent)`;
-	bm.bottom.style.color = `var(--accent-dark)`;
 	bm.image.style.borderColor = `var(--accent-dark)`;
 	bm.mapContainer.style.boxShadow = `0px 6px 0px var(--accent-dark)`;
 	bm.blinkOverlay.style.animation = 'none';
@@ -197,5 +347,95 @@ const switchAutoPick = () => {
 		enableAutoPick = true;
 		autopick_button.innerHTML = 'AUTOPICK: ON';
 		autopick_button.style.backgroundColor = '#9ffcb3';
+	}
+}
+
+window.onload = function () {
+	let ctx = document.getElementById('strains').getContext('2d');
+	window.strainGraph = new Chart(ctx, config);
+
+	let ctxProgress = document.getElementById('strainsProgress').getContext('2d');
+	window.strainGraphProgress = new Chart(ctxProgress, configProgress);
+};
+
+const getModStats = (cs_raw, ar_raw, od_raw, bpm_raw, mods) => {
+	mods = mods.replace('NC', 'DT');
+	mods = mods.replace('FM', 'HR');
+
+	let speed = mods.includes('DT') ? 1.5 : mods.includes('HT') ? 0.75 : 1;
+	let ar = mods.includes('HR') ? ar_raw * 1.4 : mods.includes('EZ') ? ar_raw * 0.5 : ar_raw;
+
+	let ar_ms = Math.max(Math.min(ar <= 5 ? 1800 - 120 * ar : 1200 - 150 * (ar - 5), 1800), 450) / speed;
+	ar = ar <= 5 ? (1800 - ar_ms) / 120 : 5 + (1200 - ar_ms) / 150;
+
+	let cs = Math.round(Math.min(mods.includes('HR') ? cs_raw * 1.3 : mods.includes('EZ') ? cs_raw * 0.5 : cs_raw, 10) * 10) / 10;
+
+	let od = mods.includes('HR') ? od_raw * 1.4 : mods.includes('EZ') ? od_raw * 0.5 : od_raw;
+	od = Math.round(Math.min((79.5 - Math.min(79.5, Math.max(19.5, 79.5 - Math.ceil(6 * od))) / speed) / 6, 11) * 10) / 10;
+
+	return {
+		cs: Math.round(cs * 10) / 10,
+		ar: Math.round(ar * 10) / 10,
+		od: Math.round(od * 10) / 10,
+		bpm: Math.round(bpm_raw * speed * 10) / 10,
+		speed
+	}
+}
+
+let config = {
+	type: 'line',
+	data: {
+		labels: [],
+		datasets: [{
+			borderColor: 'rgba(245, 245, 245, 0)',
+			backgroundColor: '#ffe79c',
+			data: [],
+			fill: true,
+			stepped: false,
+		}]
+	},
+	options: {
+		tooltips: { enabled: false },
+		legend: { display: false, },
+		elements: { point: { radius: 0 } },
+		responsive: false,
+		scales: {
+			x: { display: false, },
+			y: {
+				display: false,
+				min: 0,
+				max: 100
+			}
+		},
+		animation: { duration: 0 }
+	}
+}
+
+let configProgress = {
+	type: 'line',
+	data: {
+		labels: [],
+		datasets: [{
+			borderColor: 'rgba(245, 245, 245, 0)',
+			backgroundColor: '#fcfcfc',
+			data: [],
+			fill: true,
+			stepped: false,
+		}]
+	},
+	options: {
+		tooltips: { enabled: false },
+		legend: { display: false, },
+		elements: { point: { radius: 0 } },
+		responsive: false,
+		scales: {
+			x: { display: false, },
+			y: {
+				display: false,
+				min: 0,
+				max: 100
+			}
+		},
+		animation: { duration: 0 }
 	}
 }

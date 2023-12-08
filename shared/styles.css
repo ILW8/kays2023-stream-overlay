@@ -38,13 +38,17 @@
 :root {
     --accent: #ffd654;
     --accent-light: #f8d565;
+    --accent-bg: #ffecb0;
+    --accent-shadow: #f8c524;
     --accent-dark: #c2a74e;
+    --accent-text: #68561e;
     --accent-mod-nm: #529cdc;
     --accent-mod-hd: #f3c164;
     --accent-mod-hr: #c85a46;
     --accent-mod-dt: #c288d8;
     --accent-mod-fm: #7a9f29;
     --accent-mod-tb: #a1bd74;
+    --accent-mod-xx: #ffecb0;
     --blue: #81b2eb;
     --red: #f58178;
     --blue-darker: #5481b4;

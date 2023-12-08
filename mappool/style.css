@@ -1,6 +1,7 @@
 :root {
-    --map-width: 512px;
-    --map-height: 94px;
+    --map-width: 556px;
+    --map-height: 72px;
+    --top-height: 48px;
     --map-spacing: 18px;
     --mod-width: 90px;
 }
@@ -18,7 +19,7 @@ html {
     width: 1920px;
     height: 1080px;
     position: relative;
-    background-image: url('../_data/assets/mappool_background.png');
+    background-image: url('../_data/assets/gameplay_background.png');
 }
 
 #full-overlay {
@@ -31,9 +32,8 @@ html {
 
 #mappool-area {
     position: absolute;
-    top: 0;
+    top: 170px;
     width: 100%;
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,7 +54,7 @@ html {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: calc(3 * var(--map-spacing));
+    gap: calc(1 * var(--map-spacing));
     row-gap: var(--map-spacing);
 }
 
@@ -72,25 +72,27 @@ html {
     height: 100%;
     border-radius: 14px;
     font-weight: 500;
-    box-shadow: 0 6px 0 var(--accent-dark);
+    box-shadow: 0 6px 0 var(--accent-shadow);
     transition: box-shadow 400ms ease;
+    color: var(--accent-text);
 }
 
 .mapTop {
-    height: 57px;
+    height: var(--top-height);
     background-color: var(--accent);
-    border-radius: 14px 14px 0 0;
     color: rgba(0, 0, 0, 0.6);
+    border-radius: 16px 14px 0 0;
     display: flex;
     flex-direction: column;
     transition: background-color 400ms ease;
 }
 
 .mapTitle {
-    font-size: 25px;
-    margin-top: 6px;
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 3px;
     margin-left: 114px;
-    width: calc(var(--map-width) - 122px);
+    width: calc(var(--map-width) - 122px - 84px);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -98,8 +100,11 @@ html {
 
 .mapArtist {
     font-size: 15px;
+    font-weight: 700;
+    font-style: italic;
     margin-left: 114px;
-    width: calc(var(--map-width) - 122px);
+    margin-top: -1px;
+    width: calc(var(--map-width) - 122px - 84px);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -107,31 +112,41 @@ html {
 
 .mapBottom {
     width: 100%;
-    height: calc(var(--map-height) - 57px);
+    height: calc(var(--map-height) - var(--top-height));
     border-radius: 0 0 14px 14px;
-    background-color: #fcfcfc;
+    background-color: var(--accent-bg);
     display: flex;
 }
 
 .mapDiff {
-    font-size: 17px;
+    font-size: 15px;
+    font-weight: 700;
+    font-style: italic;
     letter-spacing: 0.5px;
     margin-left: 114px;
-    margin-top: 9px;
-    width: calc(var(--map-width) - 116px);
+    margin-top: 3px;
+    width: calc(var(--map-width) - 114px);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
 .modIcon {
-    width: 90px;
-    height: 100%;
-    font-size: 23px;
-    letter-spacing: 4px;
+    position: absolute;
+    right: 7px;
+    top: 24px;
+    width: 72px;
+    height: 36px;
+    border-radius: 12px;
+    padding-left: 5px;
+    font-size: 26px;
+    letter-spacing: 3px;
     font-weight: 700;
     margin-top: -1px;
     display: flex;
+    background-color: var(--accent-text);
+    color: white;
+    border: 3px solid white;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -139,14 +154,13 @@ html {
 
 .mapImage {
     z-index: 2;
-    width: 77px;
-    height: 77px;
-    border-radius: 14px 14px 0 0;
+    width: 100px;
+    height: 100%;
+    border-radius: 14px 0 0 14px;
     position: absolute;
     bottom: 0;
-    left: 15px;
-    border: 3px solid var(--accent-dark);
-    border-bottom: none;
+    left: 0;
+    border-right: 3px solid var(--accent-shadow);
     background-color: #202020;
     background-size: cover;
     background-position: center;
@@ -191,19 +205,6 @@ html {
     }
 }
 
-.mapNoise {
-    position: absolute;
-    z-index: 100;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background-image: url('../_data/assets/background-noise.png');
-    opacity: 0.5;
-    mix-blend-mode: soft-light;
-    user-select: none;
-}
-
 #controls {
     padding: 12px;
     position: absolute;
@@ -236,6 +237,266 @@ html {
 
 #autoPickButton {
     background-color: #fc9f9f;
+}
+
+#header {
+	position: absolute;
+	width: 1920px;
+	height: 170px;
+	font-weight: normal;
+	font-size: 58px;
+	letter-spacing: -0.5px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#logo-container {
+	width: 200px;
+	height: 90px;
+	background-image: url('../_data/assets/logo.png');
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+#stage-container {
+	width: 100%;
+	margin-top: 8px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#stage-name {
+	font-size: 32px;
+	text-transform: lowercase;
+	letter-spacing: 3px;
+	color: var(--accent-light);
+}
+
+#red-name {
+	position: absolute;
+	left: 142px;
+	top: 29px;
+	text-align: right;
+	color: var(--red);
+}
+
+#blue-name {
+	position: absolute;
+	right: 142px;
+	top: 29px;
+	text-align: left;
+	color: var(--blue);
+}
+
+#red-points {
+	position: absolute;
+	left: 142px;
+	top: 94px;
+	display: flex;
+	flex-direction: row;
+	width: fit-content;
+	padding: 4px;
+	transition: 300ms ease-out;
+}
+
+#blue-points {
+	position: absolute;
+	right: 142px;
+	top: 94px;
+	display: flex;
+	flex-direction: row-reverse;
+	width: fit-content;
+	padding: 4px;
+	transition: 300ms ease-out;
+}
+
+.star {
+	z-index: 10;
+	width: 30px;
+	height: 36px;
+	transition: 300ms;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.star.red {
+	margin-right: 12px;
+	background-image: url('../_data/assets/egg_red.png');
+	opacity: 0.3;
+}
+
+.star.blue {
+	margin-left: 12px;
+	background-image: url('../_data/assets/egg_blue.png');
+	opacity: 0.3;
+}
+
+#chat-container {
+	position: absolute;
+	bottom: 14px;
+	left: 14px;
+	width: 634px;
+	height: 146px;
+	border-radius: 14px;
+	padding: 8px 8px;
+	padding-top: 0;
+	transition: ease-in-out 500ms;
+	z-index: 1;
+	color: var(--accent);
+	background-color: #222222;
+}
+
+#chat {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-end;
+}
+
+.chat {
+	display: flex;
+	text-align: left;
+	font-size: 19px;
+	line-height: 24px;
+	padding-right: 16px;
+	width: fit-content;
+}
+
+.chatTime {
+	font-size: 16px;
+	width: 48px;
+	min-width: 48px;
+	max-height: 24.5px;
+	color: rgba(220, 220, 220, 0.5);
+	transform: translateY(1.5px);
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.chatName.bot {
+	background-color: var(--accent);
+	border-radius: 32px;
+	padding: 0 8px;
+	margin-right: 8px;
+	font-weight: 700;
+	color: rgba(5, 5, 5, 0.8);
+}
+
+.chatName {
+	color: #b3b3b3;
+}
+
+.chatName.left {
+	color: var(--red);
+}
+
+.chatName.right {
+	color: var(--blue);
+}
+
+.wholeChat {
+	width: 95%;
+	display: flex;
+}
+
+.chatName {
+	white-space: nowrap;
+	width: max-content;
+}
+
+.chatText {
+	color: #fcfcfc;
+	white-space: normal;
+	word-wrap: break-word;
+	overflow: hidden;
+}
+
+.stats-container {
+	position: absolute;
+	bottom: 146px;
+	right: 20px;
+	display: flex;
+	justify-content: flex-end;
+	gap: 24px;
+	font-size: 26px;
+	line-height: 26px;
+    color: var(--accent);
+}
+
+.stats-container>span {
+	font-weight: 500;
+	display: flex;
+	gap: 6px;
+}
+
+.stats-container>span>div {
+	font-weight: 700;
+}
+
+#strains-container {
+	position: absolute;
+	bottom: 20px;
+	right: 16px;
+	width: 496px;
+	height: 100px;
+	padding: 8px;
+	border-radius: 14px;
+	background-color: var(--accent);
+	box-shadow: 0 6px 0 var(--accent-dark);
+}
+
+#strains {
+	position: absolute;
+	left: 8px;
+	top: 8px;
+	border-radius: 10px;
+}
+
+#strainsProgress {
+	position: absolute;
+	left: 8px;
+	top: 8px;
+	border-radius: 10px;
+}
+
+#progress {
+	position: absolute;
+	width: 992px;
+	height: 100%;
+	padding: 0;
+	left: 0;
+	bottom: 0;
+	overflow: hidden;
+	transition: 100ms linear;
+	-webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 49.95%, transparent 50%);
+	mask-image: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 49.95%, transparent 50%);
+}
+
+.label {
+	position: absolute;
+	bottom: 180px;
+	font-size: 19px;
+	font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+}
+
+#strains-label {
+	right: 24px;
+}
+
+#comms-label {
+	left: 24px;
+    bottom: 234px;
 }
 
 /*Scrollbar*/
