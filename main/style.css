@@ -185,6 +185,7 @@ html {
 .combo.red {
 	right: 972px;
 }
+
 .combo.blue {
 	left: 972px;
 }
@@ -265,86 +266,104 @@ html {
 /* map */
 
 #mapContainer {
-    position: absolute;
+	position: absolute;
 	bottom: 20px;
 	left: 16px;
-    width: 512px;
-    height: 94px;
-    border-radius: 14px;
-    font-weight: 500;
-    background-color: #fcfcfc;
-    box-shadow: 0 6px 0 var(--accent-dark);
+	width: 512px;
+	height: 72px;
+	border-radius: 16px 14px 14px 14px;
+	font-weight: 500;
+	background-color: #fcfcfc;
+	box-shadow: 0 6px 0 var(--accent-shadow);
+	color: var(--accent-text);
 }
 
 #mapTop {
-    height: 57px;
+	height: 48px;
     background-color: var(--accent);
-    border-radius: 14px 14px 0 0;
-    color: #68561E;
+    color: rgba(0, 0, 0, 0.6);
+    border-radius: 16px 14px 0 0;
     display: flex;
     flex-direction: column;
+    transition: background-color 400ms ease;
 }
 
 #title {
-    font-size: 25px;
-    margin-top: 6px;
-    margin-left: 114px;
-    width: calc(512px - 122px);
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+	font-size: 24px;
+	font-weight: 700;
+	margin-top: 3px;
+	margin-left: 114px;
+	width: calc(512px - 122px - 84px);
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 #artist {
-    font-size: 15px;
-    margin-left: 114px;
-    width: calc(600px - 122px);
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+	font-size: 15px;
+	font-weight: 700;
+	font-style: italic;
+	margin-left: 114px;
+	margin-top: -1px;
+	width: calc(512px - 122px - 84px);
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 #mapBottom {
-    width: 100%;
-    height: calc(94px - 57px);
-    display: flex;
+	width: 100%;
+	height: calc(72px - 48px);
+	border-radius: 0 0 14px 14px;
+	background-color: var(--accent-bg);
+	display: flex;
 }
 
 #diff {
-    font-size: 17px;
-    letter-spacing: 0.5px;
-    margin-left: 114px;
-    margin-top: 9px;
-    width: calc(600px - 116px);
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+	font-size: 15px;
+	font-weight: 700;
+	font-style: italic;
+	letter-spacing: 0.5px;
+	margin-left: 114px;
+	margin-top: 3px;
+	width: calc(600px - 116px);
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 #mod-id {
-    width: 90px;
-    height: 100%;
-    font-size: 23px;
-    letter-spacing: 4px;
+	position: absolute;
+    right: 7px;
+    top: 24px;
+    width: 72px;
+    height: 36px;
+    border-radius: 12px;
+    padding-left: 5px;
+    font-size: 26px;
+    letter-spacing: 3px;
     font-weight: 700;
+    margin-top: -1px;
     display: flex;
+    background-color: var(--accent-text);
+    color: white;
+    border: 3px solid white;
     align-items: center;
     justify-content: center;
     text-align: center;
 }
 
 #mapImage {
-    z-index: 2;
-    width: 77px;
-    height: 77px;
-    border-radius: 14px 14px 0 0;
-    position: absolute;
-    bottom: 0;
-    left: 15px;
-    border: 3px solid #c9a840;
-    border-bottom: none;
-    background-color: #202020;
-    background-size: cover;
+	z-index: 2;
+	width: 100px;
+	height: 100%;
+	border-radius: 14px 0 0 14px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	border-right: 3px solid var(--accent-shadow);
+	background-color: #202020;
+	background-size: cover;
 	background-position: center;
 }
 
@@ -361,13 +380,13 @@ html {
 	line-height: 26px;
 }
 
-.stats-container > span {
+.stats-container>span {
 	font-weight: 500;
 	display: flex;
 	gap: 6px;
 }
 
-.stats-container > span > div {
+.stats-container>span>div {
 	font-weight: 700;
 }
 
@@ -441,8 +460,8 @@ html {
 	text-align: left;
 	font-size: 19px;
 	line-height: 24px;
-    padding-right: 16px;
-    width: fit-content;
+	padding-right: 16px;
+	width: fit-content;
 }
 
 .chatTime {
@@ -508,6 +527,7 @@ html {
 }
 
 #comms-label {
+	bottom: 160px;
 	left: 24px;
 }
 
