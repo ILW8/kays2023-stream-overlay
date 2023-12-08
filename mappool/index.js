@@ -6,6 +6,8 @@ let mappool, stage_data;
 let selectedMapsTransitionTimeout = {};
 const pick_to_transition_delay_ms = 10000;
 const gameplay_scene_name = "gameplay";
+const mappool_scene_name = "mappool";
+
 const point_rotation_red = [-12, 15, -3, 18, 9, 1, -19];
 const point_rotation_blue = [-8, -14, 16, 0, 18, 6, 15];
 (async () => {
@@ -311,7 +313,7 @@ const pickMap = (bm, playerName, color) => {
 	if (enableAutoAdvance) {
 		selectedMapsTransitionTimeout[bm.beatmapID] = setTimeout(() => {
 			console.log(`hey, ${bm.beatmapID} was picked`);
-			window.obsstudio.setCurrentScene(gameplay_scene_name);
+			switchToScene(gameplay_scene_name);
 		}, pick_to_transition_delay_ms);
 	}
 
@@ -377,6 +379,10 @@ const switchAutoAdvance = () => {
 		autoadvance_button.innerHTML = 'AUTO ADVANCE: ON';
 		autoadvance_button.style.backgroundColor = '#9ffcb3';
 	}
+}
+
+const switchToScene = (scene_name) => {
+	window.obsstudio.setCurrentScene(scene_name);
 }
 
 window.onload = function () {
