@@ -1,16 +1,134 @@
-[{"time": 1701579600000, "red_team": "Run it back", "blue_team": "papoi sa de cv", "showcase": ""},
-  {"time": 1701568800000, "red_team": "g", "blue_team": "varvalian", "showcase": ""},
-  {"time": 1701486000000, "red_team": "ermm uhhh umm", "blue_team": "Season in the sun", "showcase": ""},
-  {"time": 1701500400000, "red_team": "carrot soup", "blue_team": ":3", "showcase": ""},
-  {"time": 1701540000000, "red_team": "dorito egg", "blue_team": "LALALA HEUNDEUL", "showcase": ""},
-  {"time": 1701536400000, "red_team": "OWC Rejects", "blue_team": "edgemaxxers", "showcase": ""},
-  {"time": 1701543600000, "red_team": "12267.50 Dong", "blue_team": "Grease Monkey", "showcase": ""},
-  {"time": 1701529200000, "red_team": "edizberserbester", "blue_team": "SzredisowniaPL", "showcase": ""},
-  {"time": 1701626400000, "red_team": "carrot soup", "blue_team": "dorito egg", "showcase": ""},
-  {"time": 1701608400000, "red_team": "Season in the sun", "blue_team": "edgemaxxers", "showcase": ""},
-  {"time": 1701604800000, "red_team": "varvalian", "blue_team": "Grease Monkey", "showcase": ""},
-  {"time": 1701626400000, "red_team": "papoi sa de cv", "blue_team": "edizberserbester", "showcase": ""},
-  {"time": 1701604800000, "red_team": ":marthic:", "blue_team": ":3", "showcase": ""},
-  {"time": 1701615600000, "red_team": "H e l l o B r o", "blue_team": "ermm uhhh umm", "showcase": ""},
-  {"time": 1701626400000, "red_team": "Amamya Kokoro fans", "blue_team": "g", "showcase": ""},
-  {"time": 1701619200000, "red_team": "call me asparagus", "blue_team": "Run it back", "showcase": ""}]
+[
+  {
+    "time": 1702135800000,
+    "red_team": "Season in the sun",
+    "blue_team": "Grease Monkey",
+    "showcase": ""
+  },
+  {
+    "time": 1702144800000,
+    "red_team": "carrot soup",
+    "blue_team": "papoi sa de cv",
+    "showcase": ""
+  },
+  {
+    "time": 1702162800000,
+    "red_team": "g",
+    "blue_team": "ermm uhhh umm",
+    "showcase": ""
+  },
+  {
+    "time": 1702094400000,
+    "red_team": "Run it back",
+    "blue_team": ":3",
+    "showcase": ""
+  },
+  {
+    "time": 1702123200000,
+    "red_team": ":marthic:",
+    "blue_team": "call me asparagus",
+    "showcase": ""
+  },
+  {
+    "time": 1702134000000,
+    "red_team": "H e l l o B r o",
+    "blue_team": "Amamya Kokoro fans",
+    "showcase": ""
+  },
+  {
+    "time": 1702180800000,
+    "red_team": "Run it back",
+    "blue_team": "Season in the sun",
+    "showcase": ""
+  },
+  {
+    "time": 1702238400000,
+    "red_team": "Run it back",
+    "blue_team": "Grease Monkey",
+    "showcase": ""
+  },
+  {
+    "time": 1702191600000,
+    "red_team": ":3",
+    "blue_team": "Season in the sun",
+    "showcase": ""
+  },
+  {
+    "time": 1702202400000,
+    "red_team": ":3",
+    "blue_team": "Grease Monkey",
+    "showcase": ""
+  },
+  {
+    "time": 1702231200000,
+    "red_team": "g",
+    "blue_team": "carrot soup",
+    "showcase": ""
+  },
+  {
+    "time": 1702249200000,
+    "red_team": "g",
+    "blue_team": "papoi sa de cv",
+    "showcase": ""
+  },
+  {
+    "time": 1702231200000,
+    "red_team": "ermm uhhh umm",
+    "blue_team": "carrot soup",
+    "showcase": ""
+  },
+  {
+    "time": 1702249200000,
+    "red_team": "ermm uhhh umm",
+    "blue_team": "papoi sa de cv",
+    "showcase": ""
+  },
+  {
+    "time": 1702220400000,
+    "red_team": ":marthic:",
+    "blue_team": "g",
+    "showcase": ""
+  },
+  {
+    "time": 1702220400000,
+    "red_team": ":marthic:",
+    "blue_team": "ermm uhhh umm",
+    "showcase": ""
+  },
+  {
+    "time": 1702234800000,
+    "red_team": "call me asparagus",
+    "blue_team": "g",
+    "showcase": ""
+  },
+  {
+    "time": 1702220400000,
+    "red_team": "call me asparagus",
+    "blue_team": "ermm uhhh umm",
+    "showcase": ""
+  },
+  {
+    "time": 1702216800000,
+    "red_team": "H e l l o B r o",
+    "blue_team": "Run it back",
+    "showcase": ""
+  },
+  {
+    "time": 1702216800000,
+    "red_team": "H e l l o B r o",
+    "blue_team": ":3",
+    "showcase": ""
+  },
+  {
+    "time": 1702227600000,
+    "red_team": "Amamya Kokoro fans",
+    "blue_team": "Run it back",
+    "showcase": ""
+  },
+  {
+    "time": 1702202400000,
+    "red_team": "Amamya Kokoro fans",
+    "blue_team": ":3",
+    "showcase": ""
+  }
+]

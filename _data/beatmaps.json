@@ -1,206 +1,206 @@
 {
-    "stage": "Week 1",
-    "abbreviation": "W1",
+    "stage": "Week 2",
+    "abbreviation": "W2",
     "beatmaps": [
         {
-            "beatmap_id": 345189,
+            "beatmap_id": 2778368,
             "identifier": "NM1",
             "mods": "NM",
-            "sr": 6.96,
-            "title": "Worldwide Choppers",
-            "artist": "Tech N9ne",
-            "difficulty": "Gangsta",
-            "beatmapset_id": 137377
+            "sr": 7.49,
+            "title": "Re_Construct",
+            "artist": "Zekk",
+            "difficulty": "yf's Extra(#3)",
+            "beatmapset_id": 1318329
         },
         {
-            "beatmap_id": 1740944,
+            "beatmap_id": 730865,
             "identifier": "NM2",
             "mods": "NM",
-            "sr": 7.15,
-            "title": "Sakura Trip",
-            "artist": "Aika",
-            "difficulty": "Electric Pink",
-            "beatmapset_id": 830964
+            "sr": 7.43,
+            "title": "subconsciousness",
+            "artist": "guna with team kyukkyu",
+            "difficulty": "KILL",
+            "beatmapset_id": 151945
         },
         {
-            "beatmap_id": 1988096,
+            "beatmap_id": 2031549,
             "identifier": "NM3",
             "mods": "NM",
-            "sr": 7.37,
-            "title": "Vicious Heroism",
-            "artist": "Kobaryo",
-            "difficulty": "Another",
-            "beatmapset_id": 952060
+            "sr": 7.48,
+            "title": "DropZ-Line-",
+            "artist": "Getty vs. DJ DiA",
+            "difficulty": "Xtra",
+            "beatmapset_id": 970504
         },
         {
-            "beatmap_id": 4083586,
+            "beatmap_id": 3841084,
             "identifier": "NM4",
             "mods": "NM",
-            "sr": 7.14,
-            "title": "Drenched in Air feat. Ninomae Ina'nis",
-            "artist": "Camellia",
-            "difficulty": "Ocean of Eternity",
-            "beatmapset_id": 1968798
+            "sr": 7.3,
+            "title": "Tsuki ga Michiru",
+            "artist": "Tsukuyomi",
+            "difficulty": "Moonlight ft. a_Blue",
+            "beatmapset_id": 1867271
         },
         {
-            "beatmap_id": 1218554,
+            "beatmap_id": 3077141,
             "identifier": "NM5",
             "mods": "NM",
-            "sr": 6.41,
-            "title": "Time Leaper",
-            "artist": "Hinkik",
-            "difficulty": "1/8",
-            "beatmapset_id": 575471
+            "sr": 8.05,
+            "title": "A Lasting Promise",
+            "artist": "Laur",
+            "difficulty": "Shizurre's MAXIMUM",
+            "beatmapset_id": 1496445
         },
         {
-            "beatmap_id": 865102,
+            "beatmap_id": 3721150,
             "identifier": "NM6",
             "mods": "NM",
-            "sr": 6.07,
-            "title": "Kaoru Juyouka",
-            "artist": "Akiyama Uni",
-            "difficulty": "Musk Sprout",
-            "beatmapset_id": 397764
+            "sr": 7.31,
+            "title": "TOKYO",
+            "artist": "Sheena Ringo",
+            "difficulty": "Tension and Release",
+            "beatmapset_id": 1813876
         },
         {
-            "beatmap_id": 1915426,
+            "beatmap_id": 1366188,
             "identifier": "HR1",
             "mods": "HR",
-            "sr": 6.57,
-            "title": "NULCTRL",
-            "artist": "Silentroom",
-            "difficulty": "Pattern -0 \"NUL\"",
-            "beatmapset_id": 917159
+            "sr": 7.78,
+            "title": "Preserved Valkyria",
+            "artist": "penoreri",
+            "difficulty": "Rio's MAXIMUM",
+            "beatmapset_id": 644642
         },
         {
-            "beatmap_id": 611753,
+            "beatmap_id": 4368604,
             "identifier": "HR2",
             "mods": "HR",
-            "sr": 7,
-            "title": "perthed again (yambabom remix)",
-            "artist": "Hitori Tori",
-            "difficulty": "Zapy's Extra",
-            "beatmapset_id": 268693
+            "sr": 7.73,
+            "title": "Mach Roger",
+            "artist": "MYUKKE.",
+            "difficulty": "Maharaja",
+            "beatmapset_id": 2085335
         },
         {
-            "beatmap_id": 3689703,
+            "beatmap_id": 3407111,
             "identifier": "HR3",
             "mods": "HR",
-            "sr": 7.17,
-            "title": "The Burned Tableau",
-            "artist": "seatrus",
-            "difficulty": "Translucence",
-            "beatmapset_id": 1799801
+            "sr": 7.44,
+            "title": "NightTheater",
+            "artist": "*wakadori",
+            "difficulty": "moonlight",
+            "beatmapset_id": 1668038
         },
         {
-            "beatmap_id": 3257370,
+            "beatmap_id": 4365545,
             "identifier": "HR4",
             "mods": "HR",
-            "sr": 6.59,
-            "title": "Period. ~ Seishin no Kousoku to Jiyuu o Tsukamu Jouka (Cut Ver.)",
-            "artist": "tsunamix_underground",
-            "difficulty": "expert.",
-            "beatmapset_id": 1594769
+            "sr": 7.67,
+            "title": "Androgynos (Full Phase)",
+            "artist": "WAiKURO",
+            "difficulty": "Golden Embers",
+            "beatmapset_id": 2084167
         },
         {
-            "beatmap_id": 106361,
+            "beatmap_id": 3021082,
             "identifier": "DT1",
             "mods": "DT",
-            "sr": 7.11,
-            "title": "Sumidagawa Karenka",
-            "artist": "seiya-murai feat.ALT",
-            "difficulty": "EXTREME",
-            "beatmapset_id": 32523
+            "sr": 7.34,
+            "title": "Ghosts Play to the Audience",
+            "artist": "PinocchioP feat. Hatsune Miku",
+            "difficulty": "Fright",
+            "beatmapset_id": 1471627
         },
         {
-            "beatmap_id": 103281,
+            "beatmap_id": 1360583,
             "identifier": "DT2",
             "mods": "DT",
-            "sr": 7.59,
-            "title": "Nyanyanyanyanyanyanya!",
-            "artist": "daniwellP",
-            "difficulty": "Collab",
-            "beatmapset_id": 31419
+            "sr": 7.98,
+            "title": "Colors -sasakure.UK Futurelogic Remix-",
+            "artist": "dj TAKA",
+            "difficulty": "Insane",
+            "beatmapset_id": 317439
         },
         {
-            "beatmap_id": 3802841,
+            "beatmap_id": 2123262,
             "identifier": "DT3",
             "mods": "DT",
-            "sr": 6.94,
-            "title": "Lilieze to Enryuu Laevateinn",
-            "artist": "Kuroneko Dungeon",
+            "sr": 7.77,
+            "title": "Bison Charge",
+            "artist": "Umeboshi Chazuke",
             "difficulty": "Insane",
-            "beatmapset_id": 1851159
+            "beatmapset_id": 894701
         },
         {
-            "beatmap_id": 1582596,
+            "beatmap_id": 58970,
             "identifier": "DT4",
             "mods": "DT",
-            "sr": 6.82,
-            "title": "Variable",
-            "artist": "Function Phantom",
-            "difficulty": "Kibbleru's Insane",
-            "beatmapset_id": 751774
+            "sr": 7.39,
+            "title": "SWITCHED-ON LOTUS",
+            "artist": "Susumu Hirasawa",
+            "difficulty": "KIRBY Mix Deluxe",
+            "beatmapset_id": 16457
         },
         {
-            "beatmap_id": 2627652,
+            "beatmap_id": 2224514,
             "identifier": "DT5",
             "mods": "DT",
-            "sr": 6.79,
-            "title": "carnation.lnk",
-            "artist": "Minami Yasuhiro",
-            "difficulty": "Hatsune Miku's Insane",
-            "beatmapset_id": 1262817
+            "sr": 7.27,
+            "title": "Ringo Biyori ~The Wolf Whistling Song x Get Low (feat. Ying Yang Twins)",
+            "artist": "ROCKY CHACK, Lil Jon & The East Side Boyz",
+            "difficulty": "Fine Dog Lady",
+            "beatmapset_id": 1062345
         },
         {
-            "beatmap_id": 1249833,
+            "beatmap_id": 60737,
             "identifier": "FM1",
             "mods": "FM",
-            "sr": 6.74,
-            "title": "Re:End of a Dream",
-            "artist": "uma vs. Morimori Atsushi",
-            "difficulty": "toybot's Extra",
-            "beatmapset_id": 557039
+            "sr": 6.59,
+            "title": "Otomegokoro x Kyokuchuuhatto -dandara shooting MIX-",
+            "artist": "BARAKO",
+            "difficulty": "Kyokuchuuhatto",
+            "beatmapset_id": 16987
         },
         {
-            "beatmap_id": 49101,
+            "beatmap_id": 2874944,
             "identifier": "FM2",
             "mods": "FM",
-            "sr": 5.82,
-            "title": "Astrosexy",
-            "artist": "m-flo loves CHEMISTRY",
-            "difficulty": "Sexy",
-            "beatmapset_id": 13244
+            "sr": 7.85,
+            "title": "Bad for me (Dz'Xa's Amenpunk)",
+            "artist": "Official HIGE DANdism",
+            "difficulty": "HE WILL",
+            "beatmapset_id": 1392496
         },
         {
-            "beatmap_id": 2007648,
+            "beatmap_id": 2346860,
             "identifier": "FM3",
             "mods": "FM",
-            "sr": 7.01,
-            "title": "WIGGLECORE",
-            "artist": "FLOOR BABA",
-            "difficulty": "Mun's Extreme",
-            "beatmapset_id": 957370
+            "sr": 7.57,
+            "title": "Mei (Camellia's \"Yomigae\" Remix)",
+            "artist": "Amuro vs. Killer",
+            "difficulty": "Resurrection",
+            "beatmapset_id": 1123064
         },
         {
-            "beatmap_id": 559059,
+            "beatmap_id": 2233760,
             "identifier": "FM4",
             "mods": "FM",
-            "sr": 6.45,
-            "title": "Tengaku",
-            "artist": "Hanatan",
-            "difficulty": "Skystar's Extra",
-            "beatmapset_id": 220785
+            "sr": 7.47,
+            "title": "humanly",
+            "artist": "umu.",
+            "difficulty": "MirashMyMommy Collab",
+            "beatmapset_id": 1045518
         },
         {
-            "beatmap_id": 4225699,
+            "beatmap_id": 3491545,
             "identifier": "TB",
             "mods": "TB",
-            "sr": 7.22,
-            "title": "REGGAETON BUT IT HAS AMEN BREAKS",
-            "artist": "ulko",
-            "difficulty": "PRENDELO",
-            "beatmapset_id": 2027860
+            "sr": 7.7,
+            "title": "Duplicity Shade (feat. Sennzai)",
+            "artist": "HyuN",
+            "difficulty": "Salvation",
+            "beatmapset_id": 1708718
         }
     ]
 }
