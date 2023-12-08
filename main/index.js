@@ -1,12 +1,10 @@
-const point_rotation = 50;
+const point_rotation_red = [-12, 15, -3, 18, 9, 1, -19];
+const point_rotation_blue = [-8, -14, 16, 0, 18, 6, 15];
 let stage_data, players;
 (async () => {
 	$.ajaxSetup({ cache: false });
 	stage_data = await $.getJSON('../_data/beatmaps.json');
-
-	if (stage_data) {
-		document.getElementById('stage-name').innerHTML = stage_data.stage || '//';
-	}
+	if (stage_data) document.getElementById('stage-name').innerHTML = stage_data.stage || '//';
 })();
 
 let socket = new ReconnectingWebSocket('ws://' + location.host + '/ws');
@@ -19,13 +17,11 @@ let diff = document.getElementById('diff');
 let red_name = document.getElementById('red-name');
 let red_points = document.getElementById('red-points');
 let red_score = document.getElementById('red-score');
-let red_pfp = document.getElementById('red-pfp');
 let red_combo = document.getElementById('red-combo');
 
 let blue_name = document.getElementById('blue-name');
 let blue_points = document.getElementById('blue-points');
 let blue_score = document.getElementById('blue-score');
-let blue_pfp = document.getElementById('blue-pfp');
 let blue_combo = document.getElementById('blue-combo');
 
 let score_row = document.getElementById('score-row');
@@ -35,8 +31,6 @@ let chat_container = document.getElementById('chat-container');
 let chat = document.getElementById('chat');
 let progressChart = document.getElementById('progress');
 let strain_container = document.getElementById('strains-container');
-
-let picked_by_label = document.getElementById('picked-by-label');
 
 socket.onopen = () => { console.log('Successfully Connected'); };
 
@@ -116,23 +110,20 @@ socket.onmessage = async event => {
 
 		md5 = data.menu.bm.md5;
 		mapid = data.menu.bm.id;
-		map = stage_data?.beatmaps ? stage_data.beatmaps.find(m => m.beatmap_id == data.menu.bm.id) || { id: data.menu.bm.id, mods: 'NM', identifier: '' } : { mods: 'NM' };
+		map = stage_data?.beatmaps ? stage_data.beatmaps.find(m => m.beatmap_id == data.menu.bm.id) || { id: data.menu.bm.id, mods: 'XX', identifier: '' } : { mods: 'XX' };
 		let mod_ = map.mods;
 		let stats = getModStats(data.menu.bm.stats.CS, data.menu.bm.stats.AR, data.menu.bm.stats.OD, data.menu.bm.stats.BPM.max, mod_);
 
 		if (title_ !== data.menu.bm.metadata.title) { title_ = data.menu.bm.metadata.title; title.innerHTML = title_; }
 		if (artist_ !== data.menu.bm.metadata.artist) { artist_ = data.menu.bm.metadata.artist; artist.innerHTML = artist_; }
-		if (diff_ !== data.menu.bm.metadata.difficulty) {
-			diff_ = data.menu.bm.metadata.difficulty; diff.innerHTML = `[${diff_}]`;
-			diff.style.color = `var(--accent-mod-${mod_.toLowerCase()})`;
-		}
+		if (diff_ !== data.menu.bm.metadata.difficulty) { diff_ = data.menu.bm.metadata.difficulty; diff.innerHTML = `[${diff_}]`; }
 
 		document.getElementById('cs').innerHTML = `${stats.cs}`;
 		document.getElementById('ar').innerHTML = `${stats.ar}`;
 		document.getElementById('sr').innerHTML = map?.sr || data.menu.bm.stats.fullSR;
 		document.getElementById('bpm').innerHTML = `${map?.bpm || stats.bpm}`;
-		document.getElementById('mod-id').innerHTML = map?.identifier || '';
-		document.getElementById('mod-id').style.color = `var(--accent-mod-${mod_?.toLowerCase() || 'nm'})`;
+		document.getElementById('mod-id').innerHTML = map?.identifier || 'XX';
+		document.getElementById('mod-id').style.backgroundColor = `var(--accent-mod-${mod_?.toLowerCase() || 'xx'})`;
 
 		let len = data.menu.bm.time.full - data.menu.bm.time.firstObj;
 		let mins = Math.trunc((len / stats.speed || 1) / 1000 / 60);
@@ -144,7 +135,8 @@ socket.onmessage = async event => {
 		let node = document.createElement('div');
 		node.className = `star ${color}`;
 		node.id = `${color}${index}`;
-		node.style.transform = `rotate(${point_rotation / 2 - Math.floor(point_rotation * Math.random())}deg)`;
+		let rotation = color == 'red' ? point_rotation_red[index] : point_rotation_blue[index];
+		node.style.transform = `rotate(${rotation}deg)`;
 		document.getElementById(`${color}-points`).appendChild(node);
 	}
 
@@ -261,8 +253,8 @@ socket.onmessage = async event => {
 		for (let i = 0; i < playerCount; i++) {
 			let score = data.tourney.ipcClients[i].gameplay.score;
 			if (data.tourney.ipcClients[i]?.gameplay?.mods?.str?.toUpperCase().includes('EZ')) score *= 2;
-			scores.push({id: i, score});
-			combos.push({id: i, combo: data.tourney.ipcClients[i].gameplay.combo.current});
+			scores.push({ id: i, score });
+			combos.push({ id: i, combo: data.tourney.ipcClients[i].gameplay.combo.current });
 		}
 
 		scoreRed = scores.filter(s => s.id < playerCount / 2).map(s => s.score).reduce((a, b) => a + b);
