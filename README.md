@@ -7,7 +7,8 @@ scene collection provided [here](KAYS2023.json), make sure to check everything i
 ### GAMEPLAY SCENE  
 | source            | url/path                                             | width | height | x         | y         |
 |-------------------|------------------------------------------------------|-------|--------|-----------|-----------|
-| vc_overlay*       |                                                      | 500   | 50     | 16        | 909       |
+| vc_overlay*       | url from discord                                     | 500   | 50     | 16        | 909       |
+| name_overlays**   | http://localhost:24050/kays2023-stream-overlay/names/?id=0&flashBackground=false&color=red&placeholder=Waiting%20for%20P1%2E%2E%2E ***                                         | 638   | 360    | see below | see below |
 | osu clients**     |                                                      | 638   | 360    | see below | see below |
 | gameplay_overlay  | http://localhost:24050/kays2023-stream-overlay/main/ | 1920  | 1080   | 0         | 0         |
 
@@ -19,6 +20,8 @@ scene collection provided [here](KAYS2023.json), make sure to check everything i
 | 1      | 314  | 536  |
 | 2      | 968  | 176  |
 | 3      | 968  | 536  |
+
+<sup>***base url for names: http://localhost:24050/kays2023-stream-overlay/names?id=0&flashBackground=false&color=red&placeholder=Waiting%20for%20P1%2E%2E%2E; edit `id`, `color`, and `placeholder` accordingly.
 
 ### MAPPOOL SCENE
 | source           | url/path                                                | width | height | x  | y    |
