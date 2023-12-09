@@ -86,7 +86,13 @@ socket.onmessage = async event => {
 	 */
 	let newState = data.tourney.manager.ipcState;
 	if (lastState === 4 && newState === 1) {
-		sceneTransitionTimeoutID = setTimeout(() => obsSetCurrentScene("mappool"), 1000);
+		sceneTransitionTimeoutID = setTimeout(() => {
+			obsGetCurrentScene((scene) => {
+				if (scene.name !== "gameplay")  // e.g. on winner screen
+					return
+				obsSetCurrentScene("mappool");
+			});
+		}, 2000);
 	}
 	if (lastState !== newState && newState !== 1) {
 		clearTimeout(sceneTransitionTimeoutID);
