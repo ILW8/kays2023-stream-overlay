@@ -9,7 +9,12 @@ const gameplay_scene_name = "gameplay";
 const mappool_scene_name = "mappool";
 
 const sceneCollection = document.getElementById("sceneCollection");
-const obsGetScenes = window.obsstudio?.getScenes ?? function () {}
+const obsGetCurrentScene = window.obsstudio?.getCurrentScene ?? (() => {});
+const obsGetScenes = window.obsstudio?.getScenes ??  (() => {});
+const switchToScene = (scene_name) => {
+	const setCurrentSceneFn = window.obsstudio?.setCurrentScene ?? (() => {});
+	setCurrentSceneFn(scene_name);
+}
 
 const point_rotation_red = [-12, 15, -3, 18, 9, 1, -19];
 const point_rotation_blue = [-8, -14, 16, 0, 18, 6, 15];
@@ -62,16 +67,34 @@ let enableAutoPick = false;
 let enableAutoAdvance = false;
 let selectedMaps = [];
 
+/* === START OBS INIT === */
 obsGetScenes(scenes => {
 	console.log(scenes);
 	for (const scene of scenes) {
 		let clone = document.getElementById("sceneButtonTemplate").content.cloneNode(true);
 		let buttonNode = clone.querySelector('div');
+		buttonNode.id = `scene__${scene}`;
 		buttonNode.textContent = `GO TO: ${scene}`;
 		buttonNode.onclick = function() { switchToScene(scene); };
 		sceneCollection.appendChild(clone);
 	}
-})
+
+	obsGetCurrentScene((scene) => {
+		document.getElementById(`scene__${scene.name}`).classList.add("activeScene");
+	});
+});
+
+window.addEventListener('obsSceneChanged', function(event) {
+	let activeButton = document.getElementById(`scene__${event.detail.name}`);
+
+	for (const scene of sceneCollection.children) {
+		scene.classList.remove("activeScene");
+	}
+	activeButton.classList.add("activeScene");
+
+});
+/* === END OBS INIT === */
+
 
 socket.onmessage = async event => {
 	let data = JSON.parse(event.data);
@@ -431,10 +454,6 @@ const switchAutoAdvance = () => {
 		autoadvance_button.innerHTML = 'AUTO ADVANCE: ON';
 		autoadvance_button.style.backgroundColor = '#9ffcb3';
 	}
-}
-
-const switchToScene = (scene_name) => {
-	window.obsstudio.setCurrentScene(scene_name);
 }
 
 window.onload = function () {
