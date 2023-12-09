@@ -34,6 +34,10 @@ socket.onerror = error => { console.log('Socket Error: ', error); };
 let pick_button = document.getElementById('pickButton');
 let autopick_button = document.getElementById('autoPickButton');
 let autoadvance_button = document.getElementById('autoAdvanceButton');
+let autoadvance_timer_container = document.getElementById('autoAdvanceTimer');
+let autoadvance_timer_label = document.getElementById('autoAdvanceTimerLabel');
+let autoadvance_timer_time = new CountUp('autoAdvanceTimerTime', 10, 0, 1, 10, {useEasing: false, suffix: 's'});
+autoadvance_timer_container.style.opacity = '0';
 
 let red_name = document.getElementById('red-name');
 let red_points = document.getElementById('red-points');
@@ -387,9 +391,16 @@ const pickMap = (bm, playerName, color) => {
 	selectedMaps.push(bm.beatmapID);
 	if (enableAutoAdvance) {
 		selectedMapsTransitionTimeout[bm.beatmapID] = setTimeout(() => {
-			console.log(`hey, ${bm.beatmapID} was picked`);
 			switchToScene(gameplay_scene_name);
+			autoadvance_timer_container.style.opacity = '0';
 		}, pick_to_transition_delay_ms);
+
+		autoadvance_timer_time = new CountUp('autoAdvanceTimerTime',
+			pick_to_transition_delay_ms/1000, 0, 1, pick_to_transition_delay_ms/1000,
+			{useEasing: false, suffix: 's'});
+		autoadvance_timer_time.start();
+		autoadvance_timer_container.style.opacity = '1';
+		autoadvance_timer_label.textContent = `Switching to ${gameplay_scene_name} in`;
 	}
 
 	bm.top.style.backgroundColor = `var(--${color})`;
@@ -410,6 +421,8 @@ const banMap = (bm, playerName, color) => {
 
 const resetMap = bm => {
 	clearTimeout(selectedMapsTransitionTimeout[bm.beatmapID]);
+	autoadvance_timer_container.style.opacity = '0';
+
 	selectedMaps = selectedMaps.filter(e => e != bm.beatmapID);
 	bm.top.style.backgroundColor = `var(--accent)`;
 	bm.image.style.borderColor = `var(--accent-dark)`;
