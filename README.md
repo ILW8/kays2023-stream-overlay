@@ -4,6 +4,10 @@
 
 scene collection provided [here](KAYS2023.json), make sure to check everything is correct (especially audio devices)
 
+**NOTE:** Optionally include a copy of the mappool browser source in every other source (a reference, not a duplicate) 
+and move it off-screen. It makes it so the mappool `Interact` window doesn't go blank when not on the mappool scene.
+
+
 ### GAMEPLAY SCENE  
 | source             | url/path                                                                                                                               | width | height | x         | y         |
 |--------------------|----------------------------------------------------------------------------------------------------------------------------------------|-------|--------|-----------|-----------|
@@ -11,7 +15,6 @@ scene collection provided [here](KAYS2023.json), make sure to check everything i
 | name_overlays**    | http://localhost:24050/kays2023-stream-overlay/names/?id=0&flashBackground=false&color=red&placeholder=Waiting%20for%20P1%2E%2E%2E *** | 638   | 360    | see below | see below |
 | osu clients**      |                                                                                                                                        | 638   | 360    | see below | see below |
 | gameplay_overlay   | http://localhost:24050/kays2023-stream-overlay/main/                                                                                   | 1920  | 1080   | 0         | 0         |
-| mappool_overlay*** | <COPY & PASTE AS REFERENCE FROM **MAPPOOL SCENE**>                                                                                     | 2220  | 1080   | 1080      | 0         |
 
 <sup>*url from discord, replace custom css with [vc.css](vc.css)</sup><br>
 <sup>**placement according to the following table:</sup>
@@ -22,8 +25,6 @@ scene collection provided [here](KAYS2023.json), make sure to check everything i
 | 2      | 968  | 176  |
 | 3      | 968  | 536  |
 <br>
-<sup>***Optional, but it makes it so the mappool `Interact` window doesn't go blank when in the gameplay scene. 
-It is not meant to be visible in the gameplay scene</sup>
 
 <sup>***base url for names: http://localhost:24050/kays2023-stream-overlay/names?id=0&flashBackground=false&color=red&placeholder=Waiting%20for%20P1%2E%2E%2E; edit `id`, `color`, and `placeholder` accordingly.
 
