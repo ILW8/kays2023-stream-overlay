@@ -188,6 +188,43 @@ socket.onmessage = async event => {
 		blueName = data.tourney.manager.teamName.right;
 		blue_name.innerHTML = blueName;
 	}
+
+	if (chatLen != data.tourney.manager.chat.length) {
+		if (chatLen == 0 || (chatLen > 0 && chatLen > data.tourney.manager.chat.length)) { chat.innerHTML = ''; chatLen = 0; }
+
+		for (let i = chatLen; i < data.tourney.manager.chat.length; i++) {
+			let text = data.tourney.manager.chat[i].messageBody;
+
+			if (data.tourney.manager.chat[i].name == 'BanchoBot' && text.startsWith('Match history')) { continue; }
+			if (text.toLowerCase().startsWith('!mp')) { continue; }
+
+			let chatParent = document.createElement('div');
+			chatParent.setAttribute('class', 'chat');
+
+			let chatTime = document.createElement('div');
+			chatTime.setAttribute('class', 'chatTime');
+
+			let team = data.tourney.manager.chat[i].team;
+			let chatName = document.createElement('div');
+			chatName.setAttribute('class', `chatName ${team}`);
+
+			let chatText = document.createElement('div');
+			chatText.setAttribute('class', 'chatText');
+
+			chatTime.innerText = data.tourney.manager.chat[i].time;
+			if (team == 'bot') chatName.innerText = data.tourney.manager.chat[i].name;
+			else chatName.innerText = data.tourney.manager.chat[i].name + ':\xa0';
+			chatText.innerText = text;
+
+			chatParent.append(chatTime);
+			chatParent.append(chatName);
+			chatParent.append(chatText);
+			chat.append(chatParent);
+		}
+
+		chatLen = data.tourney.manager.chat.length;
+		chat.scrollTop = chat.scrollHeight;
+	}
 }
 
 class Beatmap {
