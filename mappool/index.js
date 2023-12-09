@@ -9,12 +9,6 @@ const gameplay_scene_name = "gameplay";
 const mappool_scene_name = "mappool";
 
 const sceneCollection = document.getElementById("sceneCollection");
-const obsGetCurrentScene = window.obsstudio?.getCurrentScene ?? (() => {});
-const obsGetScenes = window.obsstudio?.getScenes ??  (() => {});
-const switchToScene = (scene_name) => {
-	const setCurrentSceneFn = window.obsstudio?.setCurrentScene ?? (() => {});
-	setCurrentSceneFn(scene_name);
-}
 
 const point_rotation_red = [-12, 15, -3, 18, 9, 1, -19];
 const point_rotation_blue = [-8, -14, 16, 0, 18, 6, 15];
@@ -79,7 +73,7 @@ obsGetScenes(scenes => {
 		let buttonNode = clone.querySelector('div');
 		buttonNode.id = `scene__${scene}`;
 		buttonNode.textContent = `GO TO: ${scene}`;
-		buttonNode.onclick = function() { switchToScene(scene); };
+		buttonNode.onclick = function() { obsSetCurrentScene(scene); };
 		sceneCollection.appendChild(clone);
 	}
 
@@ -391,7 +385,7 @@ const pickMap = (bm, playerName, color) => {
 	selectedMaps.push(bm.beatmapID);
 	if (enableAutoAdvance) {
 		selectedMapsTransitionTimeout[bm.beatmapID] = setTimeout(() => {
-			switchToScene(gameplay_scene_name);
+			obsSetCurrentScene(gameplay_scene_name);
 			autoadvance_timer_container.style.opacity = '0';
 		}, pick_to_transition_delay_ms);
 
