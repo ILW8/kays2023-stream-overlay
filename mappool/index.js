@@ -122,6 +122,10 @@ window.addEventListener('obsSceneChanged', function(event) {
 
 
 socket.onmessage = async event => {
+	/**
+	 * gosumemory data object
+	 * @type {import('../shared/utils.js').GosuData}
+	 */
 	let data = JSON.parse(event.data);
 
 	if (!hasSetup) setupBeatmaps();
@@ -129,22 +133,25 @@ socket.onmessage = async event => {
 	/**
 	 * switch to mappool scene after ranking screen
 	 */
-	let newState = data.tourney.manager.ipcState;
-	if (enableAutoAdvance) {
-		if (lastState === TourneyState.Ranking && newState === TourneyState.Idle) {
-			sceneTransitionTimeoutID = setTimeout(() => {
-				obsGetCurrentScene((scene) => {
-					if (scene.name !== "gameplay")  // e.g. on winner screen
-						return
-					obsSetCurrentScene("mappool");
-				});
-			}, 2000);
+	{
+		let newState = data.tourney.manager.ipcState;
+		if (enableAutoAdvance) {
+			if (lastState === TourneyState.Ranking && newState === TourneyState.Idle) {
+				sceneTransitionTimeoutID = setTimeout(() => {
+					obsGetCurrentScene((scene) => {
+						if (scene.name !== gameplay_scene_name)  // e.g. on winner screen
+							return
+						obsSetCurrentScene(mappool_scene_name);
+					});
+				}, 2000);
+			}
+			if (lastState !== newState && newState !== TourneyState.Idle) {
+				clearTimeout(sceneTransitionTimeoutID);
+			}
 		}
-		if (lastState !== newState && newState !== TourneyState.Idle) {
-			clearTimeout(sceneTransitionTimeoutID);
-		}
+		lastState = newState;
 	}
-	lastState = newState;
+
 
 	if (tempMapID !== data.menu.bm.id && data.menu.bm.id != 0) {
 		if (tempMapID == 0) tempMapID = data.menu.bm.id;
