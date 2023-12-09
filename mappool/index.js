@@ -8,6 +8,9 @@ const pick_to_transition_delay_ms = 10000;
 const gameplay_scene_name = "gameplay";
 const mappool_scene_name = "mappool";
 
+const sceneCollection = document.getElementById("sceneCollection");
+const obsGetScenes = window.obsstudio?.getScenes ?? function () {}
+
 const point_rotation_red = [-12, 15, -3, 18, 9, 1, -19];
 const point_rotation_blue = [-8, -14, 16, 0, 18, 6, 15];
 (async () => {
@@ -58,6 +61,17 @@ let currentPicker = 'red';
 let enableAutoPick = false;
 let enableAutoAdvance = false;
 let selectedMaps = [];
+
+obsGetScenes(scenes => {
+	console.log(scenes);
+	for (const scene of scenes) {
+		let clone = document.getElementById("sceneButtonTemplate").content.cloneNode(true);
+		let buttonNode = clone.querySelector('div');
+		buttonNode.textContent = `GO TO: ${scene}`;
+		buttonNode.onclick = function() { switchToScene(scene); };
+		sceneCollection.appendChild(clone);
+	}
+})
 
 socket.onmessage = async event => {
 	let data = JSON.parse(event.data);
@@ -200,10 +214,11 @@ socket.onmessage = async event => {
 		blue_name.innerHTML = blueName;
 	}
 
-	if (chatLen != data.tourney.manager.chat.length) {
-		if (chatLen == 0 || (chatLen > 0 && chatLen > data.tourney.manager.chat.length)) { chat.innerHTML = ''; chatLen = 0; }
+	const currentChatLen = data.tourney.manager.chat?.length;
+	if (chatLen != currentChatLen) {
+		if (chatLen == 0 || (chatLen > 0 && chatLen > currentChatLen)) { chat.innerHTML = ''; chatLen = 0; }
 
-		for (let i = chatLen; i < data.tourney.manager.chat.length; i++) {
+		for (let i = chatLen; i < currentChatLen; i++) {
 			let text = data.tourney.manager.chat[i].messageBody;
 
 			if (data.tourney.manager.chat[i].name == 'BanchoBot' && text.startsWith('Match history')) { continue; }
@@ -233,7 +248,7 @@ socket.onmessage = async event => {
 			chat.append(chatParent);
 		}
 
-		chatLen = data.tourney.manager.chat.length;
+		chatLen = currentChatLen;
 		chat.scrollTop = chat.scrollHeight;
 	}
 }
