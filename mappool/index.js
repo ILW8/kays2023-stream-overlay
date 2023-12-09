@@ -8,6 +8,8 @@ const pick_to_transition_delay_ms = 10000;
 const gameplay_scene_name = "gameplay";
 const mappool_scene_name = "mappool";
 
+const sceneCollection = document.getElementById("sceneCollection");
+
 const point_rotation_red = [-12, 15, -3, 18, 9, 1, -19];
 const point_rotation_blue = [-8, -14, 16, 0, 18, 6, 15];
 (async () => {
@@ -26,6 +28,10 @@ socket.onerror = error => { console.log('Socket Error: ', error); };
 let pick_button = document.getElementById('pickButton');
 let autopick_button = document.getElementById('autoPickButton');
 let autoadvance_button = document.getElementById('autoAdvanceButton');
+let autoadvance_timer_container = document.getElementById('autoAdvanceTimer');
+let autoadvance_timer_label = document.getElementById('autoAdvanceTimerLabel');
+let autoadvance_timer_time = new CountUp('autoAdvanceTimerTime', 10, 0, 1, 10, {useEasing: false, suffix: 's'});
+autoadvance_timer_container.style.opacity = '0';
 
 let red_name = document.getElementById('red-name');
 let red_points = document.getElementById('red-points');
@@ -47,6 +53,33 @@ let statsCheck = false;
 
 let chatLen = 0;
 
+/**
+ * ipcState as defined in osu.Game.Tournament/IPC/TourneyState.cs:
+ *     public enum TourneyState
+ *     {
+ *         Initialising,
+ *         Idle,
+ *         WaitingForClients,
+ *         Playing,
+ *         Ranking
+ *     }
+ * @type {{WaitingForClients: number, Playing: number, Ranking: number, Idle: number, Initialising: number}}
+ */
+const TourneyState = {
+	"Initialising": 0,
+	"Idle": 1,
+	"WaitingForClients": 2,
+	"Playing": 3,
+	"Ranking": 4,
+}
+
+/**
+ * Last active TourneyState
+ * @type {number}
+ */
+let lastState;
+let sceneTransitionTimeoutID;
+
 let bestOf, firstTo;
 let starsRed, starsBlue;
 
@@ -59,10 +92,66 @@ let enableAutoPick = false;
 let enableAutoAdvance = false;
 let selectedMaps = [];
 
+/* === START OBS INIT === */
+obsGetScenes(scenes => {
+	console.log(scenes);
+	for (const scene of scenes) {
+		let clone = document.getElementById("sceneButtonTemplate").content.cloneNode(true);
+		let buttonNode = clone.querySelector('div');
+		buttonNode.id = `scene__${scene}`;
+		buttonNode.textContent = `GO TO: ${scene}`;
+		buttonNode.onclick = function() { obsSetCurrentScene(scene); };
+		sceneCollection.appendChild(clone);
+	}
+
+	obsGetCurrentScene((scene) => {
+		document.getElementById(`scene__${scene.name}`).classList.add("activeScene");
+	});
+});
+
+window.addEventListener('obsSceneChanged', function(event) {
+	let activeButton = document.getElementById(`scene__${event.detail.name}`);
+
+	for (const scene of sceneCollection.children) {
+		scene.classList.remove("activeScene");
+	}
+	activeButton.classList.add("activeScene");
+
+});
+/* === END OBS INIT === */
+
+
 socket.onmessage = async event => {
+	/**
+	 * gosumemory data object
+	 * @type {import('../shared/utils.js').GosuData}
+	 */
 	let data = JSON.parse(event.data);
 
 	if (!hasSetup) setupBeatmaps();
+
+	/**
+	 * switch to mappool scene after ranking screen
+	 */
+	{
+		let newState = data.tourney.manager.ipcState;
+		if (enableAutoAdvance) {
+			if (lastState === TourneyState.Ranking && newState === TourneyState.Idle) {
+				sceneTransitionTimeoutID = setTimeout(() => {
+					obsGetCurrentScene((scene) => {
+						if (scene.name !== gameplay_scene_name)  // e.g. on winner screen
+							return
+						obsSetCurrentScene(mappool_scene_name);
+					});
+				}, 2000);
+			}
+			if (lastState !== newState && newState !== TourneyState.Idle) {
+				clearTimeout(sceneTransitionTimeoutID);
+			}
+		}
+		lastState = newState;
+	}
+
 
 	if (tempMapID !== data.menu.bm.id && data.menu.bm.id != 0) {
 		if (tempMapID == 0) tempMapID = data.menu.bm.id;
@@ -200,10 +289,11 @@ socket.onmessage = async event => {
 		blue_name.innerHTML = blueName;
 	}
 
-	if (chatLen != data.tourney.manager.chat.length) {
-		if (chatLen == 0 || (chatLen > 0 && chatLen > data.tourney.manager.chat.length)) { chat.innerHTML = ''; chatLen = 0; }
+	const currentChatLen = data.tourney.manager.chat?.length;
+	if (chatLen != currentChatLen) {
+		if (chatLen == 0 || (chatLen > 0 && chatLen > currentChatLen)) { chat.innerHTML = ''; chatLen = 0; }
 
-		for (let i = chatLen; i < data.tourney.manager.chat.length; i++) {
+		for (let i = chatLen; i < currentChatLen; i++) {
 			let text = data.tourney.manager.chat[i].messageBody;
 
 			if (data.tourney.manager.chat[i].name == 'BanchoBot' && text.startsWith('Match history')) { continue; }
@@ -233,7 +323,7 @@ socket.onmessage = async event => {
 			chat.append(chatParent);
 		}
 
-		chatLen = data.tourney.manager.chat.length;
+		chatLen = currentChatLen;
 		chat.scrollTop = chat.scrollHeight;
 	}
 }
@@ -349,9 +439,16 @@ const pickMap = (bm, playerName, color) => {
 	selectedMaps.push(bm.beatmapID);
 	if (enableAutoAdvance) {
 		selectedMapsTransitionTimeout[bm.beatmapID] = setTimeout(() => {
-			console.log(`hey, ${bm.beatmapID} was picked`);
-			switchToScene(gameplay_scene_name);
+			obsSetCurrentScene(gameplay_scene_name);
+			autoadvance_timer_container.style.opacity = '0';
 		}, pick_to_transition_delay_ms);
+
+		autoadvance_timer_time = new CountUp('autoAdvanceTimerTime',
+			pick_to_transition_delay_ms/1000, 0, 1, pick_to_transition_delay_ms/1000,
+			{useEasing: false, suffix: 's'});
+		autoadvance_timer_time.start();
+		autoadvance_timer_container.style.opacity = '1';
+		autoadvance_timer_label.textContent = `Switching to ${gameplay_scene_name} in`;
 	}
 
 	bm.top.style.backgroundColor = `var(--${color})`;
@@ -372,6 +469,8 @@ const banMap = (bm, playerName, color) => {
 
 const resetMap = bm => {
 	clearTimeout(selectedMapsTransitionTimeout[bm.beatmapID]);
+	autoadvance_timer_container.style.opacity = '0';
+
 	selectedMaps = selectedMaps.filter(e => e != bm.beatmapID);
 	bm.top.style.backgroundColor = `var(--accent)`;
 	bm.image.style.borderColor = `var(--accent-dark)`;
@@ -416,10 +515,6 @@ const switchAutoAdvance = () => {
 		autoadvance_button.innerHTML = 'AUTO ADVANCE: ON';
 		autoadvance_button.style.backgroundColor = '#9ffcb3';
 	}
-}
-
-const switchToScene = (scene_name) => {
-	window.obsstudio.setCurrentScene(scene_name);
 }
 
 window.onload = function () {
