@@ -1,6 +1,6 @@
 [
   {
-    "time": 1702135800000,
+    "time": 1702126800000,
     "red_team": "Season in the sun",
     "blue_team": "Grease Monkey",
     "showcase": ""
@@ -36,25 +36,13 @@
     "showcase": ""
   },
   {
-    "time": 1702180800000,
-    "red_team": "Run it back",
-    "blue_team": "Season in the sun",
-    "showcase": ""
-  },
-  {
-    "time": 1702238400000,
-    "red_team": "Run it back",
-    "blue_team": "Grease Monkey",
-    "showcase": ""
-  },
-  {
     "time": 1702191600000,
     "red_team": ":3",
     "blue_team": "Season in the sun",
     "showcase": ""
   },
   {
-    "time": 1702202400000,
+    "time": 1702209600000,
     "red_team": ":3",
     "blue_team": "Grease Monkey",
     "showcase": ""
@@ -108,27 +96,15 @@
     "showcase": ""
   },
   {
-    "time": 1702216800000,
+    "time": 1702220400000,
     "red_team": "H e l l o B r o",
     "blue_team": "Run it back",
-    "showcase": ""
-  },
-  {
-    "time": 1702216800000,
-    "red_team": "H e l l o B r o",
-    "blue_team": ":3",
     "showcase": ""
   },
   {
     "time": 1702227600000,
     "red_team": "Amamya Kokoro fans",
     "blue_team": "Run it back",
-    "showcase": ""
-  },
-  {
-    "time": 1702202400000,
-    "red_team": "Amamya Kokoro fans",
-    "blue_team": ":3",
     "showcase": ""
   }
 ]
