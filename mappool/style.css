@@ -235,7 +235,8 @@ html {
     background-color: #bebebe;
 }
 
-#autoPickButton {
+#autoPickButton,
+#autoAdvanceButton {
     background-color: #fc9f9f;
 }
 

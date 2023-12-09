@@ -5,12 +5,13 @@
 scene collection provided [here](KAYS2023.json), make sure to check everything is correct (especially audio devices)
 
 ### GAMEPLAY SCENE  
-| source            | url/path                                             | width | height | x         | y         |
-|-------------------|------------------------------------------------------|-------|--------|-----------|-----------|
-| vc_overlay*       | url from discord                                     | 500   | 50     | 16        | 909       |
-| name_overlays**   | http://localhost:24050/kays2023-stream-overlay/names/?id=0&flashBackground=false&color=red&placeholder=Waiting%20for%20P1%2E%2E%2E ***                                         | 638   | 360    | see below | see below |
-| osu clients**     |                                                      | 638   | 360    | see below | see below |
-| gameplay_overlay  | http://localhost:24050/kays2023-stream-overlay/main/ | 1920  | 1080   | 0         | 0         |
+| source             | url/path                                                                                                                               | width | height | x         | y         |
+|--------------------|----------------------------------------------------------------------------------------------------------------------------------------|-------|--------|-----------|-----------|
+| vc_overlay*        | url from discord                                                                                                                       | 500   | 50     | 16        | 909       |
+| name_overlays**    | http://localhost:24050/kays2023-stream-overlay/names/?id=0&flashBackground=false&color=red&placeholder=Waiting%20for%20P1%2E%2E%2E *** | 638   | 360    | see below | see below |
+| osu clients**      |                                                                                                                                        | 638   | 360    | see below | see below |
+| gameplay_overlay   | http://localhost:24050/kays2023-stream-overlay/main/                                                                                   | 1920  | 1080   | 0         | 0         |
+| mappool_overlay*** | <COPY & PASTE AS REFERENCE FROM **MAPPOOL SCENE**>                                                                                     | 2220  | 1080   | 1080      | 0         |
 
 <sup>*url from discord, replace custom css with [vc.css](vc.css)</sup><br>
 <sup>**placement according to the following table:</sup>
@@ -20,6 +21,9 @@ scene collection provided [here](KAYS2023.json), make sure to check everything i
 | 1      | 314  | 536  |
 | 2      | 968  | 176  |
 | 3      | 968  | 536  |
+<br>
+<sup>***Optional, but it makes it so the mappool `Interact` window doesn't go blank when in the gameplay scene. 
+It is not meant to be visible in the gameplay scene</sup>
 
 <sup>***base url for names: http://localhost:24050/kays2023-stream-overlay/names?id=0&flashBackground=false&color=red&placeholder=Waiting%20for%20P1%2E%2E%2E; edit `id`, `color`, and `placeholder` accordingly.
 
@@ -27,7 +31,7 @@ scene collection provided [here](KAYS2023.json), make sure to check everything i
 | source           | url/path                                                | width | height | x  | y    |
 |------------------|---------------------------------------------------------|-------|--------|----|------|
 | vc_overlay       |                                                         | 480   | 100    | 16 | 1014 |
-| mappool_overlay* | http://localhost:24050/kays2023-stream-overlay/mappool/ | 2220  | 700    | 0  | 220  |
+| mappool_overlay* | http://localhost:24050/kays2023-stream-overlay/mappool/ | 2220  | 1080   | 0  | 220  |
 
 ### Interacting with the mappool
 - Left click: left (red) team pick
@@ -38,11 +42,13 @@ scene collection provided [here](KAYS2023.json), make sure to check everything i
 <sup>*"control panel" featuring autopick function is off the screen, use the interact menu to activate</sup>
 
 ### INTRO SCENE
-| source           | url/path                                                | width | height | x | y   |
-|------------------|---------------------------------------------------------|-------|--------|---|-----|
-| intro_overlay*    | http://localhost:24050/kays2023-stream-overlay/intro/   | 1920  | 1080   | 0 | 0   |
+| source         | url/path                                              | width | height | x | y |
+|----------------|-------------------------------------------------------|-------|--------|---|---|
+| intro_overlay* | http://localhost:24050/kays2023-stream-overlay/intro/ | 2280  | 1080   | 0 | 0 |
 
-<sup>*data pulled from `_data/coming_up.json`, requires exchanging between matches</sup>
+<sup>*data pulled from `_data/coming_up.json`, will show the closest upcoming match by default. 
+Match schedule updates should be acquired by `git pull`ing. **In the event there are two matches at the same time,
+use `Interact` with the browser source to access the control panel off to the right of the window.**</sup>
 
 ### WINNER SCENE
 | source           | url/path                                                | width | height | x | y   |

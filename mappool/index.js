@@ -1,4 +1,13 @@
 let mappool, stage_data;
+
+/** maps selected beatmap to scene transition timeout id
+ * @type {Object.<number, number>} dict
+ */
+let selectedMapsTransitionTimeout = {};
+const pick_to_transition_delay_ms = 10000;
+const gameplay_scene_name = "gameplay";
+const mappool_scene_name = "mappool";
+
 const point_rotation_red = [-12, 15, -3, 18, 9, 1, -19];
 const point_rotation_blue = [-8, -14, 16, 0, 18, 6, 15];
 (async () => {
@@ -16,6 +25,7 @@ socket.onerror = error => { console.log('Socket Error: ', error); };
 
 let pick_button = document.getElementById('pickButton');
 let autopick_button = document.getElementById('autoPickButton');
+let autoadvance_button = document.getElementById('autoAdvanceButton');
 
 let red_name = document.getElementById('red-name');
 let red_points = document.getElementById('red-points');
@@ -46,6 +56,7 @@ let redName = 'Red Team', blueName = 'Blue Team';
 let tempMapID = 0;
 let currentPicker = 'red';
 let enableAutoPick = false;
+let enableAutoAdvance = false;
 let selectedMaps = [];
 
 socket.onmessage = async event => {
@@ -299,6 +310,12 @@ const pickMap = (bm, playerName, color) => {
 	lastPicked = bm;
 	switchPick(color);
 	selectedMaps.push(bm.beatmapID);
+	if (enableAutoAdvance) {
+		selectedMapsTransitionTimeout[bm.beatmapID] = setTimeout(() => {
+			console.log(`hey, ${bm.beatmapID} was picked`);
+			switchToScene(gameplay_scene_name);
+		}, pick_to_transition_delay_ms);
+	}
 
 	bm.top.style.backgroundColor = `var(--${color})`;
 	bm.image.style.borderColor = `var(--${color}-darker)`;
@@ -317,6 +334,7 @@ const banMap = (bm, playerName, color) => {
 }
 
 const resetMap = bm => {
+	clearTimeout(selectedMapsTransitionTimeout[bm.beatmapID]);
 	selectedMaps = selectedMaps.filter(e => e != bm.beatmapID);
 	bm.top.style.backgroundColor = `var(--accent)`;
 	bm.image.style.borderColor = `var(--accent-dark)`;
@@ -348,6 +366,23 @@ const switchAutoPick = () => {
 		autopick_button.innerHTML = 'AUTOPICK: ON';
 		autopick_button.style.backgroundColor = '#9ffcb3';
 	}
+}
+
+const switchAutoAdvance = () => {
+	if (enableAutoAdvance) {
+		enableAutoAdvance = false;
+		autoadvance_button.innerHTML = 'AUTO ADVANCE: OFF';
+		autoadvance_button.style.backgroundColor = '#fc9f9f';
+	}
+	else {
+		enableAutoAdvance = true;
+		autoadvance_button.innerHTML = 'AUTO ADVANCE: ON';
+		autoadvance_button.style.backgroundColor = '#9ffcb3';
+	}
+}
+
+const switchToScene = (scene_name) => {
+	window.obsstudio.setCurrentScene(scene_name);
 }
 
 window.onload = function () {
