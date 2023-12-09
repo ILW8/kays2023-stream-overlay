@@ -53,6 +53,33 @@ let statsCheck = false;
 
 let chatLen = 0;
 
+/**
+ * ipcState as defined in osu.Game.Tournament/IPC/TourneyState.cs:
+ *     public enum TourneyState
+ *     {
+ *         Initialising,
+ *         Idle,
+ *         WaitingForClients,
+ *         Playing,
+ *         Ranking
+ *     }
+ * @type {{WaitingForClients: number, Playing: number, Ranking: number, Idle: number, Initialising: number}}
+ */
+const TourneyState = {
+	"Initialising": 0,
+	"Idle": 1,
+	"WaitingForClients": 2,
+	"Playing": 3,
+	"Ranking": 4,
+}
+
+/**
+ * Last active TourneyState
+ * @type {number}
+ */
+let lastState;
+let sceneTransitionTimeoutID;
+
 let bestOf, firstTo;
 let starsRed, starsBlue;
 
@@ -98,6 +125,26 @@ socket.onmessage = async event => {
 	let data = JSON.parse(event.data);
 
 	if (!hasSetup) setupBeatmaps();
+
+	/**
+	 * switch to mappool scene after ranking screen
+	 */
+	let newState = data.tourney.manager.ipcState;
+	if (enableAutoAdvance) {
+		if (lastState === TourneyState.Ranking && newState === TourneyState.Idle) {
+			sceneTransitionTimeoutID = setTimeout(() => {
+				obsGetCurrentScene((scene) => {
+					if (scene.name !== "gameplay")  // e.g. on winner screen
+						return
+					obsSetCurrentScene("mappool");
+				});
+			}, 2000);
+		}
+		if (lastState !== newState && newState !== TourneyState.Idle) {
+			clearTimeout(sceneTransitionTimeoutID);
+		}
+	}
+	lastState = newState;
 
 	if (tempMapID !== data.menu.bm.id && data.menu.bm.id != 0) {
 		if (tempMapID == 0) tempMapID = data.menu.bm.id;

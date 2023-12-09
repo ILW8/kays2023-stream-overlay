@@ -62,43 +62,12 @@ let bestOf, firstTo;
 let scoreVisible, starsVisible;
 let starsRed, scoreRed, nameRed, comboRed;
 let starsBlue, scoreBlue, nameBlue, comboBlue;
-let lastState = 0;
-let sceneTransitionTimeoutID;
 
 scoreRed = 0;
 scoreBlue = 0;
 
 socket.onmessage = async event => {
 	let data = JSON.parse(event.data);
-
-	/**
-	 * switch to mappool scene after ranking screen
-	 *
-	 * ipcState as defined in osu.Game.Tournament/IPC/TourneyState.cs:
-	 *     public enum TourneyState
-	 *     {
-	 *         Initialising,
-	 *         Idle,
-	 *         WaitingForClients,
-	 *         Playing,
-	 *         Ranking
-	 *     }
-	 */
-	let newState = data.tourney.manager.ipcState;
-	if (lastState === 4 && newState === 1) {
-		sceneTransitionTimeoutID = setTimeout(() => {
-			obsGetCurrentScene((scene) => {
-				if (scene.name !== "gameplay")  // e.g. on winner screen
-					return
-				obsSetCurrentScene("mappool");
-			});
-		}, 2000);
-	}
-	if (lastState !== newState && newState !== 1) {
-		clearTimeout(sceneTransitionTimeoutID);
-	}
-	lastState = newState;
-
 
 	if (scoreVisible !== data.tourney.manager.bools.scoreVisible) {
 		scoreVisible = data.tourney.manager.bools.scoreVisible;
