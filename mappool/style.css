@@ -210,6 +210,12 @@ html {
     position: absolute;
     left: 1920px;
     top: 0;
+    background-color: #303030;
+}
+
+.controlLabel {
+    color: #aaaaaa;
+    font-size: 18px;
 }
 
 .pickButton {
@@ -222,6 +228,23 @@ html {
     align-items: center;
     justify-content: center;
     color: var(--red);
+}
+
+.sceneButton {
+    width: 240px;
+    height: 40px;
+    margin-bottom: 12px;
+    padding-left: 8px;
+    font-size: 22px;
+    display: flex;
+    text-align: left;
+    align-items: center;
+    justify-content: left;
+    color: var(--red);
+}
+
+.activeScene {
+    background-color: #3a8f29!important;
 }
 
 .switchPickButton {
