@@ -112,7 +112,7 @@ socket.onmessage = async event => {
 		mapid = data.menu.bm.id;
 		map = stage_data?.beatmaps ? stage_data.beatmaps.find(m => m.beatmap_id == data.menu.bm.id) || { id: data.menu.bm.id, mods: 'XX', identifier: '' } : { mods: 'XX' };
 		let mod_ = map.mods;
-		let stats = getModStats(data.menu.bm.stats.CS, data.menu.bm.stats.AR, data.menu.bm.stats.OD, data.menu.bm.stats.BPM.max, mod_);
+		let stats = getModStats(data.menu.bm.stats.CS, data.menu.bm.stats.AR, data.menu.bm.stats.OD, map?.bpm || data.menu.bm.stats.BPM.max, mod_);
 
 		if (title_ !== data.menu.bm.metadata.title) { title_ = data.menu.bm.metadata.title; title.innerHTML = title_; }
 		if (artist_ !== data.menu.bm.metadata.artist) { artist_ = data.menu.bm.metadata.artist; artist.innerHTML = artist_; }
