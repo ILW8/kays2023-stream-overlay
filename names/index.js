@@ -26,6 +26,7 @@ let background = document.getElementById('full-overlay');
 
 	if (color) {
 		nameText.style.color = color == 'red' ? 'var(--red)' : 'var(--blue)';
+		nameText.style.textShadow = `2px 2px 0 ${color == 'red' ? 'var(--red-dark)' : 'var(--blue-dark)'}`;
 	}
 })();
 

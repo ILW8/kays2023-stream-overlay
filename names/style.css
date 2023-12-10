@@ -30,5 +30,7 @@ html {
 	transform-origin: bottom right;
 	transition: transform 100ms cubic-bezier(0, 1, 0.4, 1);
 	transition-property: background-color, font-size, transform, color, background-color;
+	text-shadow: 2px 2px 0 rgb(119, 119, 119);
+	filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.2));
 }
 
