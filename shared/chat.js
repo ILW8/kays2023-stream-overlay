@@ -10,10 +10,20 @@ let currentRefereeName = "";
 let forceRepaintChat = false;
 
 function updateCurrentRef(event) {
-    console.log(event.target.value);
     currentRefereeName = event.target.value;
     forceRepaintChat = true;
+
+    // propagate to gameplay window
+    setCookie('currentRefereeName', currentRefereeName);
 }
+
+setInterval(() => {
+    let newRefereeName = getCookie('currentRefereeName');
+    if (newRefereeName !== currentRefereeName) {
+        currentRefereeName = newRefereeName;
+        forceRepaintChat = true;
+    }
+}, 1000);
 
 function updateChat(data) {
     const currentChatLen = data.tourney.manager.chat?.length;
