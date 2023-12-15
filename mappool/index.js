@@ -39,13 +39,6 @@ let red_points = document.getElementById('red-points');
 let blue_name = document.getElementById('blue-name');
 let blue_points = document.getElementById('blue-points');
 
-let chat_container = document.getElementById('chat-container');
-let chat = document.getElementById('chat');
-let stopwatch = document.getElementById("stopwatch");
-let stopwatchPie = document.getElementById("stopwatch-pie");
-let stopwatchHideTimeout = 0;
-let banchoTimer = document.getElementById('banchoTimer');
-let banchoTimer_time = new CountUp('banchoTimer', 0, 0, 0, 0, {useEasing: false, suffix: 's'});
 let progressChart = document.getElementById('progress');
 let strain_container = document.getElementById('strains-container');
 
@@ -56,7 +49,6 @@ let tempStrains, seek, fullTime;
 let changeStats = false;
 let statsCheck = false;
 
-let chatLen = 0;
 
 /**
  * ipcState as defined in osu.Game.Tournament/IPC/TourneyState.cs:
@@ -294,89 +286,7 @@ socket.onmessage = async event => {
 		blue_name.innerHTML = blueName;
 	}
 
-	const currentChatLen = data.tourney.manager.chat?.length;
-	var lastMessage = {chatName: "", chatText: ""};
-	if (chatLen != currentChatLen) {
-		if (chatLen == 0 || (chatLen > 0 && chatLen > currentChatLen)) { chat.innerHTML = ''; chatLen = 0; }
-
-		for (let i = chatLen; i < currentChatLen; i++) {
-			let text = data.tourney.manager.chat[i].messageBody;
-
-			if (data.tourney.manager.chat[i].name == 'BanchoBot' && text.startsWith('Match history')) { continue; }
-
-			let chatParent = document.createElement('div');
-			chatParent.setAttribute('class', 'chat');
-
-			let chatTime = document.createElement('div');
-			chatTime.setAttribute('class', 'chatTime');
-
-			let team = data.tourney.manager.chat[i].team;
-			let chatName = document.createElement('div');
-			chatName.setAttribute('class', `chatName ${team}`);
-
-			let chatText = document.createElement('div');
-			chatText.setAttribute('class', 'chatText');
-
-			chatTime.innerText = data.tourney.manager.chat[i].time;
-			if (team == 'bot') chatName.innerText = data.tourney.manager.chat[i].name;
-			else chatName.innerText = data.tourney.manager.chat[i].name + ':\xa0';
-			chatText.innerText = text;
-
-			chatParent.append(chatTime);
-			chatParent.append(chatName);
-			chatParent.append(chatText);
-			if (!text.toLowerCase().startsWith('!mp')) { chat.append(chatParent); }
-
-			lastMessage.chatName = chatName.innerText;
-			lastMessage.chatText = chatText.innerText;
-		}
-
-		chatLen = currentChatLen;
-		chat.scrollTop = chat.scrollHeight;
-
-		if (lastMessage.chatText.startsWith("!mp timer")) {
-			do {
-				var timerLength = lastMessage.chatText.split(" ")[2];
-				if (timerLength !== undefined) {
-					const timerLengthStr = timerLength;
-					timerLength = parseInt(timerLength);
-					console.log("yep, got it: " + timerLength);
-					if (isNaN(timerLength)) {
-						console.log(timerLengthStr);
-						if (timerLengthStr === 'abort') {
-							stopwatch.style.opacity = '0';
-							banchoTimer.style.opacity = '0';
-						}
-						continue;
-					}
-				} else {
-					console.log("using default 30s timer");
-					timerLength = 30;
-				}
-
-				clearTimeout(stopwatchHideTimeout);
-				stopwatch.style.opacity = '1';
-				banchoTimer.style.opacity = '1';
-				stopwatchPie.classList.add("stopwatch-animate-skip");
-				stopwatchPie.style.strokeDashoffset = '0';
-				stopwatchPie.getBoundingClientRect();  // force CSS flush
-				stopwatchPie.classList.remove("stopwatch-animate-skip");
-				stopwatchPie.style.transition = `stroke-dashoffset ${timerLength}s linear`;
-				stopwatchPie.style.strokeDashoffset = '100';
-				banchoTimer_time = new CountUp('banchoTimer', timerLength, 0, 0, timerLength, {useEasing: false, suffix: 's'});
-				banchoTimer_time.start();
-				stopwatchHideTimeout = setTimeout(() => {
-					stopwatch.style.opacity = '0';
-					banchoTimer.style.opacity = '0';
-					},  timerLength * 1000);
-			} while (false)
-		}
-
-		if (lastMessage.chatText.startsWith("!mp start")) {
-			stopwatch.style.opacity = '0';
-			banchoTimer.style.opacity = '0';
-		}
-	}
+	updateChat(data);
 }
 
 class Beatmap {
