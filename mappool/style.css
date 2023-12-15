@@ -443,43 +443,6 @@ html {
 	word-wrap: break-word;
 	overflow: hidden;
 }
-
-#stopwatch-pie {
-    fill: #00000000;
-    stroke: var(--accent);
-    stroke-width: 128;
-    stroke-dasharray: 100;
-    transform: rotate(-90deg);
-    transition: stroke-dashoffset 1s linear;
-
-}
-
-.stopwatch-animate-skip {
-    transition: none!important;
-}
-
-.matchTimer {
-    transition: opacity 200ms linear;
-    opacity: 0;
-}
-
-#stopwatch {
-    margin: 0 auto;
-    border-radius: 50%;
-    display: block;
-    position: absolute;
-    right: 40px;
-    bottom: 7px;
-}
-
-#banchoTimer {
-    color: var(--accent);
-    position: absolute;
-    bottom: 8px;
-    right: 8px;
-    font-weight: normal;
-}
-
 .stats-container {
 	position: absolute;
 	bottom: 146px;
