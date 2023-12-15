@@ -41,6 +41,11 @@ let blue_points = document.getElementById('blue-points');
 
 let chat_container = document.getElementById('chat-container');
 let chat = document.getElementById('chat');
+let stopwatch = document.getElementById("stopwatch");
+let stopwatchPie = document.getElementById("stopwatch-pie");
+let stopwatchHideTimeout = 0;
+let banchoTimer = document.getElementById('banchoTimer');
+let banchoTimer_time = new CountUp('banchoTimer', 0, 0, 0, 0, {useEasing: false, suffix: 's'});
 let progressChart = document.getElementById('progress');
 let strain_container = document.getElementById('strains-container');
 
@@ -290,6 +295,7 @@ socket.onmessage = async event => {
 	}
 
 	const currentChatLen = data.tourney.manager.chat?.length;
+	var lastMessage = {chatName: "", chatText: ""};
 	if (chatLen != currentChatLen) {
 		if (chatLen == 0 || (chatLen > 0 && chatLen > currentChatLen)) { chat.innerHTML = ''; chatLen = 0; }
 
@@ -297,7 +303,7 @@ socket.onmessage = async event => {
 			let text = data.tourney.manager.chat[i].messageBody;
 
 			if (data.tourney.manager.chat[i].name == 'BanchoBot' && text.startsWith('Match history')) { continue; }
-			if (text.toLowerCase().startsWith('!mp')) { continue; }
+			if (text.toLowerCase().startsWith('!mp')) { console.log(text); }
 
 			let chatParent = document.createElement('div');
 			chatParent.setAttribute('class', 'chat');
@@ -321,10 +327,55 @@ socket.onmessage = async event => {
 			chatParent.append(chatName);
 			chatParent.append(chatText);
 			chat.append(chatParent);
+			lastMessage.chatName = chatName.innerText;
+			lastMessage.chatText = chatText.innerText;
 		}
 
 		chatLen = currentChatLen;
 		chat.scrollTop = chat.scrollHeight;
+
+		if (lastMessage.chatText.startsWith("!mp timer")) {
+			do {
+				var timerLength = lastMessage.chatText.split(" ")[2];
+				if (timerLength !== undefined) {
+					const timerLengthStr = timerLength;
+					timerLength = parseInt(timerLength);
+					console.log("yep, got it: " + timerLength);
+					if (isNaN(timerLength)) {
+						console.log(timerLengthStr);
+						if (timerLengthStr === 'abort') {
+							stopwatch.style.opacity = '0';
+							banchoTimer.style.opacity = '0';
+						}
+						continue;
+					}
+				} else {
+					console.log("using default 30s timer");
+					timerLength = 30;
+				}
+
+				clearTimeout(stopwatchHideTimeout);
+				stopwatch.style.opacity = '1';
+				banchoTimer.style.opacity = '1';
+				stopwatchPie.classList.add("stopwatch-animate-skip");
+				stopwatchPie.style.strokeDashoffset = '0';
+				stopwatchPie.getBoundingClientRect();  // force CSS flush
+				stopwatchPie.classList.remove("stopwatch-animate-skip");
+				stopwatchPie.style.transition = `stroke-dashoffset ${timerLength}s linear`;
+				stopwatchPie.style.strokeDashoffset = '100';
+				banchoTimer_time = new CountUp('banchoTimer', timerLength, 0, 0, timerLength, {useEasing: false, suffix: 's'});
+				banchoTimer_time.start();
+				stopwatchHideTimeout = setTimeout(() => {
+					stopwatch.style.opacity = '0';
+					banchoTimer.style.opacity = '0';
+					},  timerLength * 1000);
+			} while (false)
+		}
+
+		if (lastMessage.chatText.startsWith("!mp start")) {
+			stopwatch.style.opacity = '0';
+			banchoTimer.style.opacity = '0';
+		}
 	}
 }
 
