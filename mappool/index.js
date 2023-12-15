@@ -303,7 +303,6 @@ socket.onmessage = async event => {
 			let text = data.tourney.manager.chat[i].messageBody;
 
 			if (data.tourney.manager.chat[i].name == 'BanchoBot' && text.startsWith('Match history')) { continue; }
-			if (text.toLowerCase().startsWith('!mp')) { console.log(text); }
 
 			let chatParent = document.createElement('div');
 			chatParent.setAttribute('class', 'chat');
@@ -326,7 +325,8 @@ socket.onmessage = async event => {
 			chatParent.append(chatTime);
 			chatParent.append(chatName);
 			chatParent.append(chatText);
-			chat.append(chatParent);
+			if (!text.toLowerCase().startsWith('!mp')) { chat.append(chatParent); }
+
 			lastMessage.chatName = chatName.innerText;
 			lastMessage.chatText = chatText.innerText;
 		}
