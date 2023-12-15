@@ -33,6 +33,8 @@ let autoadvance_timer_label = document.getElementById('autoAdvanceTimerLabel');
 let autoadvance_timer_time = new CountUp('autoAdvanceTimerTime', 10, 0, 1, 10, {useEasing: false, suffix: 's'});
 autoadvance_timer_container.style.opacity = '0';
 
+let refHighlighter = document.getElementById('refHighlighter');
+
 let red_name = document.getElementById('red-name');
 let red_points = document.getElementById('red-points');
 
@@ -116,6 +118,8 @@ window.addEventListener('obsSceneChanged', function(event) {
 
 });
 /* === END OBS INIT === */
+
+refHighlighter.addEventListener('input', updateCurrentRef);
 
 
 socket.onmessage = async event => {

@@ -388,7 +388,7 @@ html {
 	display: flex;
 	text-align: left;
 	font-size: 19px;
-	line-height: 24px;
+	line-height: 22px;
 	padding-right: 16px;
 	width: fit-content;
 }
@@ -417,6 +417,7 @@ html {
 
 .chatName {
 	color: #b3b3b3;
+    margin-top: 1.5px;
 }
 
 .chatName.left {

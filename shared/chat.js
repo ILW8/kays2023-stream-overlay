@@ -6,15 +6,25 @@ let stopwatchPie = document.getElementById("stopwatch-pie");
 let stopwatchHideTimeout = 0;
 let banchoTimer = document.getElementById('banchoTimer');
 let banchoTimer_time = new CountUp('banchoTimer', 0, 0, 0, 0, {useEasing: false, suffix: 's'});
+let currentRefereeName = "";
+let forceRepaintChat = false;
+
+function updateCurrentRef(event) {
+    console.log(event.target.value);
+    currentRefereeName = event.target.value;
+    forceRepaintChat = true;
+}
 
 function updateChat(data) {
     const currentChatLen = data.tourney.manager.chat?.length;
     let lastMessage = {chatName: "", chatText: ""};
-    if (chatLen !== currentChatLen) {
-        if (chatLen === 0 || (chatLen > 0 && chatLen > currentChatLen)) {
+    if (chatLen !== currentChatLen || forceRepaintChat) {
+        console.log("chat updated!!!");
+        if (chatLen === 0 || (chatLen > 0 && chatLen > currentChatLen) || forceRepaintChat) {
             chat.innerHTML = '';
             chatLen = 0;
         }
+        forceRepaintChat = false;
 
         for (let i = chatLen; i < currentChatLen; i++) {
             let text = data.tourney.manager.chat[i].messageBody;
@@ -30,6 +40,9 @@ function updateChat(data) {
             chatTime.setAttribute('class', 'chatTime');
 
             let team = data.tourney.manager.chat[i].team;
+            if (data.tourney.manager.chat[i].name === currentRefereeName) {
+                team = 'bot';  // "bot" only means we highlight the user in yellow...
+            }
             let chatName = document.createElement('div');
             chatName.setAttribute('class', `chatName ${team}`);
 
