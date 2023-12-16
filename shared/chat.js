@@ -84,11 +84,14 @@ function updateChat(data) {
                 stopwatchPie.classList.remove("stopwatch-animate-skip");
                 stopwatchPie.style.transition = `stroke-dashoffset ${timerLength}s linear`;
                 stopwatchPie.style.strokeDashoffset = '100';
+
+                banchoTimer_time.reset();
                 banchoTimer_time = new CountUp('banchoTimer', timerLength, 0, 0, timerLength, {
                     useEasing: false,
                     suffix: 's'
                 });
                 banchoTimer_time.start();
+
                 stopwatchHideTimeout = setTimeout(() => {
                     stopwatch.style.opacity = '0';
                     banchoTimer.style.opacity = '0';
