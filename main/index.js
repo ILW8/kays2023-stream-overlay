@@ -320,9 +320,7 @@ socket.onmessage = async event => {
 			score_diff.style.opacity = 0;
 		}
 	}
-	if (!scoreVisible) {
-		updateChat(data);
-	}
+	updateChat(data);
 }
 
 const delay = async time => new Promise(resolve => setTimeout(resolve, time));
