@@ -462,6 +462,7 @@ html {
 	line-height: 22px;
 	padding-right: 16px;
 	width: fit-content;
+	margin-top: 1.5px;
 }
 
 .chatTime {
@@ -488,7 +489,6 @@ html {
 
 .chatName {
 	color: #b3b3b3;
-	margin-top: 1.5px;
 }
 
 .chatName.left {

@@ -391,6 +391,7 @@ html {
 	line-height: 22px;
 	padding-right: 16px;
 	width: fit-content;
+    margin-top: 1.5px;
 }
 
 .chatTime {
@@ -408,6 +409,7 @@ html {
 
 .chatName.bot {
 	background-color: var(--accent);
+    max-height: 24.5px;
 	border-radius: 32px;
 	padding: 0 8px;
 	margin-right: 8px;
@@ -417,7 +419,6 @@ html {
 
 .chatName {
 	color: #b3b3b3;
-    margin-top: 1.5px;
 }
 
 .chatName.left {
