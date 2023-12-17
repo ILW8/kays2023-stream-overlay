@@ -25,8 +25,8 @@ let background = document.getElementById('full-overlay');
 	}
 
 	if (color) {
-		nameText.style.color = color == 'red' ? 'var(--red)' : 'var(--blue)';
-		nameText.style.textShadow = `2px 2px 0 ${color == 'red' ? 'var(--red-dark)' : 'var(--blue-dark)'}`;
+		nameText.style.color = color === 'red' ? 'var(--red)' : 'var(--blue)';
+		nameText.style.textShadow = `2px 2px 0 ${color === 'red' ? 'var(--red-dark)' : 'var(--blue-dark)'}`;
 	}
 })();
 
@@ -48,6 +48,7 @@ socket.onmessage = async event => {
 		nameText.style.transition = 'transform 100ms cubic-bezier(0, 1, 0.4, 1), color 100ms cubic-bezier(0, 1, 0.4, 1)';
 		nameText.style.transform = 'scale(1.15)';
 		nameText.style.color = 'var(--red-bright)';
+		nameText.style.textShadow = '2px 2px 0 var(--red-bright-shadow)';
 
 		setTimeout(() => {
 			if (bgFlash) {
@@ -58,6 +59,7 @@ socket.onmessage = async event => {
 			nameText.style.transition = 'transform 500ms cubic-bezier(0.42, 0.04, 0.49, 0.97), color 500ms cubic-bezier(0.42, 0.04, 0.49, 0.97)';
 			nameText.style.transform = 'scale(1.0)';
 			nameText.style.color = color === 'red' ? 'var(--red)' : 'var(--blue)';
+			nameText.style.textShadow = `2px 2px 0 ${color === 'red' ? 'var(--red-dark)' : 'var(--blue-dark)'}`;
 		}, 150);
 	}
 	combo = client.gameplay.combo.current;
