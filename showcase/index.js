@@ -31,7 +31,7 @@ socket.onopen = () => { console.log('Successfully Connected'); };
 socket.onclose = event => { console.log('Socket Closed Connection: ', event); socket.send('Client Closed!'); };
 socket.onerror = error => { console.log('Socket Error: ', error); };
 
-let image, title_, diff_, artist_, replay_, id;
+let image, title_, diff_, artist_, replay_, id, md5;
 let len_, bpm_, sr_, cs_, ar_, od_;
 let strains, seek, fulltime;
 let state;
@@ -56,7 +56,8 @@ socket.onmessage = async event => {
 	// update now playing
 	if (mappool && id !== data.menu.bm.id) {
 		id = data.menu.bm.id;
-		let map = mappool.find(m => m.beatmap_id == id);
+		md5 = data.menu.bm.md5;
+		let map = mappool.find(m => m.beatmap_id === id || m.md5 === md5);
 		nowplaying.innerHTML = map ? map.identifier : 'XX';
 	}
 
