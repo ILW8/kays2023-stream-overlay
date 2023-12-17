@@ -54,11 +54,32 @@ socket.onmessage = async event => {
 	}
 
 	// update now playing
-	if (mappool && id !== data.menu.bm.id) {
+	if (mappool && (id !== data.menu.bm.id || md5 !== data.menu.bm.md5)) {
 		id = data.menu.bm.id;
 		md5 = data.menu.bm.md5;
 		let map = mappool.find(m => m.beatmap_id === id || m.md5 === md5);
 		nowplaying.innerHTML = map ? map.identifier : 'XX';
+
+		bpm_ = map?.bpm || data.menu.bm.stats.BPM.max;
+		bpm.innerHTML = Math.round(bpm_ * 10) / 10;
+
+		sr_ = map?.sr || data.menu.bm.stats.fullSR;
+		sr.innerHTML = sr_.toFixed(2) + '★';
+
+		cs_ = data.menu.bm.stats.CS;
+		cs.innerHTML = Math.round(cs_ * 10) / 10;
+
+		ar_ = data.menu.bm.stats.AR;
+		ar.innerHTML = Math.round(ar_ * 10) / 10;
+
+		od_ = data.menu.bm.stats.OD;
+		od.innerHTML = Math.round(od_ * 10) / 10;
+
+		let length_modifier = data.resultsScreen.mods.str.includes('DT') || data.menu.mods.str.includes('DT') ? 1.5 : 1;
+		len_ = data.menu.bm.time.full - data.menu.bm.time.firstObj;
+		let mins = Math.trunc((len_ / length_modifier) / 1000 / 60);
+		let secs = Math.trunc((len_ / length_modifier) / 1000 % 60);
+		len.innerHTML = `${mins}:${secs.toString().padStart(2, '0')}`;
 	}
 
 	// update replayer
@@ -88,31 +109,6 @@ socket.onmessage = async event => {
 		diff_ = data.menu.bm.metadata.difficulty;
 		diff.innerHTML = `[${diff_}]`;
 		mapper.innerHTML = data.menu.bm.metadata.mapper;
-	}
-
-	// update map stats
-	if (ar_ !== data.menu.bm.stats.AR || cs_ !== data.menu.bm.stats.CS || sr_ !== data.menu.bm.stats.fullSR || len_ !== data.menu.bm.time.full - data.menu.bm.time.firstObj) {
-
-		bpm_ = data.menu.bm.stats.BPM.max;
-		bpm.innerHTML = Math.round(bpm_ * 10) / 10;
-
-		sr_ = data.menu.bm.stats.fullSR;
-		sr.innerHTML = sr_.toFixed(2) + '★';
-
-		cs_ = data.menu.bm.stats.CS;
-		cs.innerHTML = Math.round(cs_ * 10) / 10;
-
-		ar_ = data.menu.bm.stats.AR;
-		ar.innerHTML = Math.round(ar_ * 10) / 10;
-
-		od_ = data.menu.bm.stats.OD;
-		od.innerHTML = Math.round(od_ * 10) / 10;
-
-		let length_modifier = data.resultsScreen.mods.str.includes('DT') || data.menu.mods.str.includes('DT') ? 1.5 : 1;
-		len_ = data.menu.bm.time.full - data.menu.bm.time.firstObj;
-		let mins = Math.trunc((len_ / length_modifier) / 1000 / 60);
-		let secs = Math.trunc((len_ / length_modifier) / 1000 % 60);
-		len.innerHTML = `${mins}:${secs.toString().padStart(2, '0')}`;
 	}
 
 	// update strains
