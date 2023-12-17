@@ -33,14 +33,14 @@ let autoadvance_timer_label = document.getElementById('autoAdvanceTimerLabel');
 let autoadvance_timer_time = new CountUp('autoAdvanceTimerTime', 10, 0, 1, 10, {useEasing: false, suffix: 's'});
 autoadvance_timer_container.style.opacity = '0';
 
+let refHighlighter = document.getElementById('refHighlighter');
+
 let red_name = document.getElementById('red-name');
 let red_points = document.getElementById('red-points');
 
 let blue_name = document.getElementById('blue-name');
 let blue_points = document.getElementById('blue-points');
 
-let chat_container = document.getElementById('chat-container');
-let chat = document.getElementById('chat');
 let progressChart = document.getElementById('progress');
 let strain_container = document.getElementById('strains-container');
 
@@ -51,7 +51,6 @@ let tempStrains, seek, fullTime;
 let changeStats = false;
 let statsCheck = false;
 
-let chatLen = 0;
 
 /**
  * ipcState as defined in osu.Game.Tournament/IPC/TourneyState.cs:
@@ -119,6 +118,8 @@ window.addEventListener('obsSceneChanged', function(event) {
 
 });
 /* === END OBS INIT === */
+
+refHighlighter.addEventListener('input', updateCurrentRef);
 
 
 socket.onmessage = async event => {
@@ -289,43 +290,7 @@ socket.onmessage = async event => {
 		blue_name.innerHTML = blueName;
 	}
 
-	const currentChatLen = data.tourney.manager.chat?.length;
-	if (chatLen != currentChatLen) {
-		if (chatLen == 0 || (chatLen > 0 && chatLen > currentChatLen)) { chat.innerHTML = ''; chatLen = 0; }
-
-		for (let i = chatLen; i < currentChatLen; i++) {
-			let text = data.tourney.manager.chat[i].messageBody;
-
-			if (data.tourney.manager.chat[i].name == 'BanchoBot' && text.startsWith('Match history')) { continue; }
-			if (text.toLowerCase().startsWith('!mp')) { continue; }
-
-			let chatParent = document.createElement('div');
-			chatParent.setAttribute('class', 'chat');
-
-			let chatTime = document.createElement('div');
-			chatTime.setAttribute('class', 'chatTime');
-
-			let team = data.tourney.manager.chat[i].team;
-			let chatName = document.createElement('div');
-			chatName.setAttribute('class', `chatName ${team}`);
-
-			let chatText = document.createElement('div');
-			chatText.setAttribute('class', 'chatText');
-
-			chatTime.innerText = data.tourney.manager.chat[i].time;
-			if (team == 'bot') chatName.innerText = data.tourney.manager.chat[i].name;
-			else chatName.innerText = data.tourney.manager.chat[i].name + ':\xa0';
-			chatText.innerText = text;
-
-			chatParent.append(chatTime);
-			chatParent.append(chatName);
-			chatParent.append(chatText);
-			chat.append(chatParent);
-		}
-
-		chatLen = currentChatLen;
-		chat.scrollTop = chat.scrollHeight;
-	}
+	updateChat(data);
 }
 
 class Beatmap {

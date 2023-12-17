@@ -388,9 +388,10 @@ html {
 	display: flex;
 	text-align: left;
 	font-size: 19px;
-	line-height: 24px;
+	line-height: 22px;
 	padding-right: 16px;
 	width: fit-content;
+    margin-top: 1.5px;
 }
 
 .chatTime {
@@ -408,6 +409,7 @@ html {
 
 .chatName.bot {
 	background-color: var(--accent);
+    max-height: 24.5px;
 	border-radius: 32px;
 	padding: 0 8px;
 	margin-right: 8px;
@@ -443,7 +445,6 @@ html {
 	word-wrap: break-word;
 	overflow: hidden;
 }
-
 .stats-container {
 	position: absolute;
 	bottom: 146px;

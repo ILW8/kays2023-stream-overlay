@@ -459,9 +459,10 @@ html {
 	display: flex;
 	text-align: left;
 	font-size: 19px;
-	line-height: 24px;
+	line-height: 22px;
 	padding-right: 16px;
 	width: fit-content;
+	margin-top: 1.5px;
 }
 
 .chatTime {
